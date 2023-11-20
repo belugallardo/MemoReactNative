@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 1,
         shadowRadius: 5,
-        elevation: 5, // Solo para Android
+        elevation: 5, 
         textAlign: 'center',
     },
     customButtonAzul: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'center',
-        lineHeight: 60, // Alinea verticalmente el texto en el botón redondo
+        lineHeight: 60, 
     },
     buttonText: {
         color: '#ffffff',

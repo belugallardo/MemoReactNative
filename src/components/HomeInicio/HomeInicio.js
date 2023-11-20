@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity, Text } from 'react-native';
-import CustomButton from '../Button.js/Button'; // Asegúrate de importar el botón personalizado de React Native
+import CustomButton from '../ButtonMemo/Button'; 
 
 const HomeInicio = ({ navigation }) => {
   const goToLogin = () => {
-    navigation.navigate('Login'); // Reemplaza 'Login' con la ruta correspondiente en tu app
+    navigation.navigate('Login'); 
   };
 
   const goToRegister = () => {
-    navigation.navigate('Register'); // Reemplaza 'Register' con la ruta correspondiente en tu app
+    navigation.navigate('Register'); 
   };
 
   return (
@@ -17,7 +17,7 @@ const HomeInicio = ({ navigation }) => {
       <View style={styles.imgMemoContenedor}>
         <Image
           style={styles.imgMemo}
-          source={require('../../../assets/logo.png')} // Reemplaza con la ruta de tu imagen
+          source={require('../../../assets/logo.png')} 
           resizeMode="contain"
         />
       </View>
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imgMemo: {
-    width: 400, // Cambia el tamaño de la imagen según tus necesidades
-    height: 400, // Cambia el tamaño de la imagen según tus necesidades
+    width: 400, 
+    height: 400, 
   },
   imgMemoContenedor: {
     alignItems: 'center',
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   customButton: {
-    backgroundColor: 'blue', // Color de fondo del botón
+    backgroundColor: 'blue', 
     margin: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white', // Color del texto del botón
+    color: 'white', 
     textAlign: 'center',
     fontSize: 16,
   },
