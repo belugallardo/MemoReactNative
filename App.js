@@ -1,13 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import HomeInicio from './src/components/HomeInicio/HomeInicio';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Esta es la primera App de Memo androide  🙄 !</Text>
-      <Text> esto es un poco basico me aburro</Text>
-      
-      <StatusBar style="auto" />
+      <HomeInicio/>
     </View>
   );
 }
