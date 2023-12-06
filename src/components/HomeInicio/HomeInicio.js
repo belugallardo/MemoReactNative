@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity, Text } from 'react-native';
 import CustomButton from '../ButtonMemo/Button'; 
+import GoogleButton from '../ButtonGoogle/ButtonGoogle';
 
 const HomeInicio = ({ navigation }) => {
   const goToLogin = () => {
@@ -10,6 +11,10 @@ const HomeInicio = ({ navigation }) => {
 
   const goToRegister = () => {
     navigation.navigate('Register'); 
+  };
+
+  const goToTareas = () => {
+    navigation.navigate('Tareas'); 
   };
 
   return (
@@ -24,7 +29,7 @@ const HomeInicio = ({ navigation }) => {
 
       <View style={styles.botonComenzar}>
         <TouchableOpacity>
-        <CustomButton text="LOGIN" estilo="customButton" onPress={goToLogin} />
+        <CustomButton text="LOGIN" estilo="customButton" onPress={goToTareas} />
         </TouchableOpacity>
         <TouchableOpacity>
         <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToRegister} />

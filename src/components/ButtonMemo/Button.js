@@ -1,5 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import 'react-native-gesture-handler';
+//importar fuente 
 
 const CustomButton = ({ text, onPress, estilo }) => {
     return (
