@@ -17,6 +17,19 @@ const HomeInicio = ({ navigation }) => {
     navigation.navigate('Tareas'); 
   };
 
+  const goToHomeTutor = () => {
+    navigation.navigate('HomeTutor'); 
+  };
+
+  const goToUsuario = () => {
+    navigation.navigate('HomeUsuario'); 
+  };
+
+  const goSelecTutorUser = () => {
+    navigation.navigate('SelecTutorUser'); 
+  };
+
+
   return (
     <View style={styles.homeLogin}>
       <View style={styles.imgMemoContenedor}>
@@ -29,7 +42,7 @@ const HomeInicio = ({ navigation }) => {
 
       <View style={styles.botonComenzar}>
         <TouchableOpacity>
-        <CustomButton text="LOGIN" estilo="customButton" onPress={goToTareas} />
+        <CustomButton text="LOGIN" estilo="customButton" onPress={goSelecTutorUser} />
         </TouchableOpacity>
         <TouchableOpacity>
         <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToRegister} />

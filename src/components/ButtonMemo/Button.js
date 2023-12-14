@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
-//importar fuente 
 
 const CustomButton = ({ text, onPress, estilo }) => {
     return (
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff6600',
         color: '#ffffff',
         fontWeight: 'bold',
-        fontFamily: 'theBold',
         letterSpacing: 3,
         fontSize: 25,
         shadowColor: '#bb530e',

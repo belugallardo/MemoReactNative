@@ -139,7 +139,7 @@ const styles = {
     color: '#FF6600',
     letterSpacing: 3,
     fontSize: 40,
-    fontFamily: 'theBold', // Ajusta la fuente a la importada
+     // Ajusta la fuente a la importada
   },
   subtitulo: {
     color: '#737474',
