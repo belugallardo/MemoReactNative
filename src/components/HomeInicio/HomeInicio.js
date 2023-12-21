@@ -9,8 +9,8 @@ const HomeInicio = ({ navigation }) => {
     navigation.navigate('Login'); 
   };
 
-  const goToRegister = () => {
-    navigation.navigate('Register'); 
+  const goToEnconstruccion = () => {
+    navigation.navigate('EnConstruccion'); 
   };
 
   const goToTareas = () => {
@@ -45,7 +45,7 @@ const HomeInicio = ({ navigation }) => {
         <CustomButton text="LOGIN" estilo="customButton" onPress={goSelecTutorUser} />
         </TouchableOpacity>
         <TouchableOpacity>
-        <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToRegister} />
+        <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToEnconstruccion} />
         </TouchableOpacity>
       </View>
     </View>

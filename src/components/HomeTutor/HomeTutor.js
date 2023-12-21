@@ -41,10 +41,10 @@ const HomeTutor = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.blueButtonContainer}>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Inicio')}>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Inicio')}>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
                     <Image source={logoutImage} style={styles.imageStyle} />
                 </TouchableOpacity>
             </View>
