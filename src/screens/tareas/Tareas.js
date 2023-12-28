@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTask, deleteTask } from '../../fectures/tareas/tareasSlice'; 
 
 const Tareas = () => {
-    const [tasks, setTasks] = useState([]);
+    const tasks = useSelector(state => state.tareas.tasks);
+    const dispatch = useDispatch();
     const [taskInput, setTaskInput] = useState('');
 
-    const addTask = () => {
+    const addTaskHandler = () => {
         if (taskInput.trim() !== '') {
-            setTasks([...tasks, taskInput]);
+            dispatch(addTask(taskInput));
             setTaskInput('');
         }
     };
 
-    const deleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
+    const deleteTaskHandler = (index) => {
+        dispatch(deleteTask(index));
     };
 
     return (
@@ -25,7 +27,7 @@ const Tareas = () => {
                 value={taskInput}
                 onChangeText={(text) => setTaskInput(text)}
             />
-            <TouchableOpacity style={styles.addButton} onPress={addTask}>
+            <TouchableOpacity style={styles.addButton} onPress={addTaskHandler}>
                 <Text>Agregar Tareas</Text>
             </TouchableOpacity>
             <FlatList
@@ -34,7 +36,7 @@ const Tareas = () => {
                 renderItem={({ item, index }) => (
                     <View style={styles.taskItem}>
                         <Text>{item}</Text>
-                        <TouchableOpacity onPress={() => deleteTask(index)}>
+                        <TouchableOpacity onPress={() => deleteTaskHandler(index)}>
                             <Text style={styles.deleteButton}>Delete</Text>
                         </TouchableOpacity>
                     </View>
@@ -43,6 +45,7 @@ const Tareas = () => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

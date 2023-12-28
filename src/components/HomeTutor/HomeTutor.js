@@ -17,6 +17,10 @@ const HomeTutor = () => {
         console.log("Valor de esarData", esarData);
     }, [esarData]);
 
+    const goToTareas = () => {
+        navigation.navigate('Tareas'); 
+      };
+
     return (
         <View style={styles.container}>
             <Text>{esarData}</Text>
@@ -30,8 +34,8 @@ const HomeTutor = () => {
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>
                     <Text style={styles.buttonText}>MI CARNET</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>SEMANA</Text>
+                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
+                    <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>
                     <Text style={styles.buttonText}>COMUNICACION</Text>
