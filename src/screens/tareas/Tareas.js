@@ -1,85 +1,109 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList,Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { addTask, deleteTask } from '../../fectures/tareas/tareasSlice'; 
+import {
+    View,
+    Text,
+    FlatList,
+    Image,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+} from 'react-native';
+import { useGetActividadQuery } from '../../fectures/api/apiSlice';
 import logoutImage from '../../../assets/logout.png';
 import backImage from '../../../assets/back.png';
-import { useGetActividadQuery } from '../../fectures/api/apiSlice';
 
 const Tareas = () => {
-    const tasks = useSelector(state => state.tareas.tasks);
-    const dispatch = useDispatch();
-    const [taskInput, setTaskInput] = useState('');
-    
-    const {data,isLoading,error} = useGetActividadQuery();
-    if (data) {
-        console.log("Data:", data.data.document);
-      } else if (isLoading) {
-        console.log("Cargando...");
-      } else if (error) {
-        console.error("Error:", error);
-      }
-    
-    const addTaskHandler = () => {
-        if (taskInput.trim() !== '') {
-            dispatch(addTask(taskInput));
-            setTaskInput('');
+    const { data, isLoading, error } = useGetActividadQuery();
+    const [selectedImages, setSelectedImages] = useState(new Set());
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const toggleImageSelection = (imageUrl) => {
+        const newSelectedImages = new Set(selectedImages);
+        if (newSelectedImages.has(imageUrl)) {
+            newSelectedImages.delete(imageUrl);
+        } else {
+            newSelectedImages.add(imageUrl);
         }
+        setSelectedImages(newSelectedImages);
     };
 
-    const deleteTaskHandler = (index) => {
-        dispatch(deleteTask(index));
+    const renderImageUrlItem = ({ item }) => {
+        // Filtra las imágenes según el término de búsqueda en el campo "filtro"
+        if (searchTerm && !item.filtro.some((filtroItem) => filtroItem.includes(searchTerm))) {
+            return null;
+        }
+
+        return (
+            <TouchableOpacity
+                style={[
+                    styles.imageContainer,
+                    selectedImages.has(item.imageUrl) && styles.selectedImageContainer,
+                ]}
+                onPress={() => toggleImageSelection(item.imageUrl)}
+            >
+                <Image source={{ uri: item.imageUrl }} style={styles.imageStyle} />
+            </TouchableOpacity>
+        );
     };
 
-    const renderImageUrlItem = ({ item }) => (
-        <View style={styles.imageContainer}>
-            <Image source={{ uri: item.imageUrl }} style={styles.imageStyle} />
-        </View>
-    );
+    const agregarTareasSeleccionadas = () => {
+        const tareasSeleccionadas = Array.from(selectedImages);
+        console.log(tareasSeleccionadas)
+        // Realiza el POST a la API con las tareasSeleccionadas
+        // Puedes utilizar fetch o cualquier librería para manejar las solicitudes HTTP
+
+        // Ejemplo:
+        fetch('tu-url-de-api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ tareas: tareasSeleccionadas }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Maneja la respuesta de la API según tus necesidades
+                console.log('Respuesta de la API:', data);
+            })
+            .catch((error) => {
+                console.error('Error al realizar la solicitud POST:', error);
+            });
+    };
 
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
-                placeholder="Enter tarea"
-                value={taskInput}
-                onChangeText={(text) => setTaskInput(text)}
+                placeholder="Buscar por filtro"
+                value={searchTerm}
+                onChangeText={(text) => setSearchTerm(text)}
             />
-            <TouchableOpacity style={styles.addButton} onPress={addTaskHandler}>
-                <Text>Agregar Tareas</Text>
-            </TouchableOpacity>
-            <FlatList
-                data={tasks}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => (
-                    <View style={styles.taskItem}>
-                        <Text>{item}</Text>
-                        <TouchableOpacity onPress={() => deleteTaskHandler(index)}>
-                            <Text style={styles.deleteButton}>Delete</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
-            />
-            <View style={styles.blueButtonContainer}>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
-                    <Image source={backImage} style={styles.imageStyle} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
-                    <Image source={logoutImage} style={styles.imageStyle} />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.container}>
-            {/* ... (resto del código) */}
             <FlatList
                 data={data ? data.data.document : []}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderImageUrlItem}
             />
+            <TouchableOpacity
+                style={styles.addButton}
+                onPress={agregarTareasSeleccionadas}
+            >
+                <Text>Agregar Tareas Seleccionadas</Text>
+            </TouchableOpacity>
+
+            <View style={styles.blueButtonContainer}>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                    <Image source={backImage} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                    <Image source={logoutImage} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+            </View>
         </View>
-        </View>
+
+
+
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -99,26 +123,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-    taskItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
+    imageStyle: {
+        width: 70,
+        height: 70,
+        
     },
-    deleteButton: {
-        color: 'red',
+    imageContainer: {
+        margin: 5,
+        borderWidth: 2,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        overflow: 'hidden',
+        flexDirection: 'row', // Cambio: establecer dirección de fila
+        alignItems: 'center', // Cambio: centrar verticalmente las imágenes
+    },
+
+    selectedImageContainer: {
+        borderColor: 'blue', // Puedes cambiar el color para indicar la selección
     },
     blueButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 35,
     },
-    imageStyle: {
+    imageStyleButton: {
         width: 70,
         height: 70,
     },
 });
 
 export default Tareas;
+
