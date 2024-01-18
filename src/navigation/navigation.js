@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SelecTutorUser from '../components/SelecTutorUser/SelecTutorUser';
-import HomeUsuario from '../components/HomeUsuario/HomeUsuario';
-import HomeTutor from '../components/HomeTutor/HomeTutor';
+import HomeUsuario from '../screens/HomeUsuario/HomeUsuario';
+import HomeTutor from '../screens/HomeTutor/HomeTutor';
 import Tareas from '../screens/tareas/Tareas';
-import { HomeLogin } from '../components/HomeLogin/HomeLogin';
-import HomeInicio from '../components/HomeInicio/HomeInicio';
+import { HomeLogin } from '../screens/HomeLogin/HomeLogin';
+import HomeInicio from '../screens/HomeInicio/HomeInicio';
 import EnConstruccion from '../screens/EnConstruccion/EnContruccion';
 
 

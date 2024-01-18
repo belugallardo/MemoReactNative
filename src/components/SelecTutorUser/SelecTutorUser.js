@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, TextInput } from 'react-native';
 import CustomButton from '../ButtonMemo/Button';
-import HomeTutor from '../HomeTutor/HomeTutor';
-import HomeUsuario from '../HomeUsuario/HomeUsuario';
+import HomeTutor from '../../screens/HomeTutor/HomeTutor';
+import HomeUsuario from '../../screens/HomeUsuario/HomeUsuario';
 
 const SelecTutorUser = ({ navigation }) => {
     const [password, setPassword] = useState('');
@@ -46,8 +46,8 @@ const SelecTutorUser = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    item:{
-        alignItems:'center'
+    item: {
+        alignItems: 'center'
 
     },
     input: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop:-60
+        marginTop: -60
     },
 });
 

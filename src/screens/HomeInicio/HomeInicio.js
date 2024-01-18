@@ -1,32 +1,32 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity, Text } from 'react-native';
-import CustomButton from '../ButtonMemo/Button'; 
-import GoogleButton from '../ButtonGoogle/ButtonGoogle';
+import CustomButton from '../../components/ButtonMemo/Button';
+import GoogleButton from '../../components/ButtonGoogle/ButtonGoogle';
 
 const HomeInicio = ({ navigation }) => {
   const goToLogin = () => {
-    navigation.navigate('Login'); 
+    navigation.navigate('Login');
   };
 
   const goToEnconstruccion = () => {
-    navigation.navigate('EnConstruccion'); 
+    navigation.navigate('EnConstruccion');
   };
 
   const goToTareas = () => {
-    navigation.navigate('Tareas'); 
+    navigation.navigate('Tareas');
   };
 
   const goToHomeTutor = () => {
-    navigation.navigate('HomeTutor'); 
+    navigation.navigate('HomeTutor');
   };
 
   const goToUsuario = () => {
-    navigation.navigate('HomeUsuario'); 
+    navigation.navigate('HomeUsuario');
   };
 
   const goSelecTutorUser = () => {
-    navigation.navigate('SelecTutorUser'); 
+    navigation.navigate('SelecTutorUser');
   };
 
 
@@ -35,17 +35,17 @@ const HomeInicio = ({ navigation }) => {
       <View style={styles.imgMemoContenedor}>
         <Image
           style={styles.imgMemo}
-          source={require('../../../assets/logo.png')} 
+          source={require('../../../assets/logo.png')}
           resizeMode="contain"
         />
       </View>
 
       <View style={styles.botonComenzar}>
         <TouchableOpacity>
-        <CustomButton text="LOGIN" estilo="customButton" onPress={goSelecTutorUser} />
+          <CustomButton text="LOGIN" estilo="customButton" onPress={goSelecTutorUser} />
         </TouchableOpacity>
         <TouchableOpacity>
-        <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToEnconstruccion} />
+          <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToEnconstruccion} />
         </TouchableOpacity>
       </View>
     </View>
@@ -54,13 +54,13 @@ const HomeInicio = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   botonComenzar: {
-    
+
     flexDirection: 'column',
     justifyContent: 'center',
   },
   imgMemo: {
-    width: 400, 
-    height: 400, 
+    width: 400,
+    height: 400,
   },
   imgMemoContenedor: {
     alignItems: 'center',
@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   customButton: {
-    backgroundColor: 'blue', 
+    backgroundColor: 'blue',
     margin: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white', 
+    color: 'white',
     textAlign: 'center',
     fontSize: 16,
   },

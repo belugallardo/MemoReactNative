@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, } from 'react-native';
-import GoogleButton from '../ButtonGoogle/ButtonGoogle';
-import { getAuth, GoogleAuthProvider, signInWithPopup ,signInWithCredential,signInWithRedirect,signInWithGoogle } from 'firebase/auth';
+import GoogleButton from '../../components/ButtonGoogle/ButtonGoogle';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithCredential, signInWithRedirect, signInWithGoogle } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import axios from 'axios';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
@@ -9,12 +9,12 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-export const HomeLogin = ({navigation}) => {
+export const HomeLogin = ({ navigation }) => {
 
-  
-  
+
+
   const [firebaseConfig, setFirebaseConfig] = useState(null);
-  
+
   const signInWithGoogleMethod = async () => {
     try {
       const response = await axios.get('http://192.168.100.2:8080/login');
@@ -28,8 +28,8 @@ export const HomeLogin = ({navigation}) => {
       // Inicializar Firebase en el cliente con la configuración obtenida
       const app = initializeApp(response.data);
       const auth = getAuth(app);
-      
-      const provider = new GoogleAuthProvider();{
+
+      const provider = new GoogleAuthProvider(); {
 
       }
       // const result = await signInWithPopup(auth, provider);
@@ -59,7 +59,7 @@ export const HomeLogin = ({navigation}) => {
   };
 
   const HomeInicio = () => {
-    navigation.navigate('Home'); 
+    navigation.navigate('Home');
   };
 
   // const contactohandler = async () => {
@@ -100,15 +100,15 @@ export const HomeLogin = ({navigation}) => {
             <Text style={styles.olvideContrasenia}>OLVIDÉ MI CONTRASEÑA</Text>
           </TouchableOpacity>
 
-              <GoogleButton onPress={signInWithGoogleMethod}/>
+          <GoogleButton onPress={signInWithGoogleMethod} />
 
           <View style={styles.contenedorBotonAzul}>
             {/* Los botones con sus imágenes */}
             <TouchableOpacity onPress={HomeInicio} >
-              <Image  source={require('../../../assets/back.png')} style={styles.botonAzul}  />
+              <Image source={require('../../../assets/back.png')} style={styles.botonAzul} />
             </TouchableOpacity>
             <TouchableOpacity onPress={HomeInicio} >
-              <Image  source={require('../../../assets/accept.png')} style={styles.botonAzul} />
+              <Image source={require('../../../assets/accept.png')} style={styles.botonAzul} />
             </TouchableOpacity>
           </View>
         </View>
@@ -139,7 +139,7 @@ const styles = {
     color: '#FF6600',
     letterSpacing: 3,
     fontSize: 40,
-     // Ajusta la fuente a la importada
+    // Ajusta la fuente a la importada
   },
   subtitulo: {
     color: '#737474',
