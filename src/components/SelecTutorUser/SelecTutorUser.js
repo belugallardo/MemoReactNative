@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, TextInput } from 'react-native';
 import CustomButton from '../ButtonMemo/Button';
-import HomeTutor from '../../screens/HomeTutor/HomeTutor';
-import HomeUsuario from '../../screens/HomeUsuario/HomeUsuario';
+import HomeTutor from '../../screens/Tutor/HomeTutor/HomeTutor';
+import HomeUsuario from '../../screens/Usuario/HomeUsuario/HomeUsuario';
 
 const SelecTutorUser = ({ navigation }) => {
     const [password, setPassword] = useState('');

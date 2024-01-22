@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import backImage from '../../../assets/back.png';
-import logoutImage from '../../../assets/logout.png';
+import backImage from '../../../../assets/back.png';
+import logoutImage from '../../../../assets/logout.png';
 
 const HomeTutor = () => {
     const route = useRoute();
@@ -17,8 +17,8 @@ const HomeTutor = () => {
         console.log("Valor de esarData", esarData);
     }, [esarData]);
 
-    const goToTareas = () => {
-        navigation.navigate('Tareas'); 
+    const goToCategoriasTutor = () => {
+        navigation.navigate('CategoriasTutor'); 
       };
 
     return (
@@ -34,7 +34,7 @@ const HomeTutor = () => {
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>
                     <Text style={styles.buttonText}>MI CARNET</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
+                <TouchableOpacity style={styles.customButton} onPress={goToCategoriasTutor}>
                     <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>
