@@ -20,10 +20,51 @@ import * as ImagePicker from 'expo-image-picker';
 const Tareas = () => {
     //camara
     const [image, setImage] = useState('');
-    // const [description, setDescription] = useState(''); // Agrega el estado para la descripción del usuario
-    // const [userEmail, setUserEmail] = useState(''); // Agrega el estado para el email del usuario
-
+    const [categoria, setcategoria] = useState(''); // Agrega el estado para la descripción del usuario
+    const [userEmail, setUserEmail] = useState(''); // Agrega el estado para el email del usuario
+    const [filtro, setFiltro] = useState('');
     const [createActividad] = useCreateActividadMutation();
+
+    
+    
+    //envio de imagen a la api
+    const handleCreateActividad = async () => {
+        try {
+            // Verifica que el email del usuario y la descripción estén disponibles antes de realizar la solicitud POST
+            // const imageContent = image
+            // const categoria = "higiene"
+            // const filtro = "test"
+            // const email = "test@test"
+            if (userEmail && image) {
+                console.log(userEmail,image)
+                const formData = new FormData();
+                formData.append('email', userEmail);
+                formData.append('categoria', categoria);
+                formData.append('filtro', filtro);
+                
+                // Convierte la URI del archivo en un objeto File
+                const file = {
+                    uri: image.uri,
+                    type: 'image/jpg',
+                    name: 'image.jpg',
+                };
+                
+                formData.append('pictograma', file);
+                
+                console.log("formulario", formData);
+                
+                
+                const result = await createActividad(formData).unwrap();
+                console.log('Respuesta de la API:', result);
+            } else {
+                console.warn('Email del usuario o imagen faltante. No se realizó la solicitud POST.');
+            }
+        } catch (error) {
+            console.error('Error al crear actividad:', error);
+        }
+    };
+    //fin
+
 
     const pickImagen = async () => {
 
@@ -37,9 +78,11 @@ const Tareas = () => {
                     aspect: [4, 3],
                     quality: 1,
                 });
-
                 if (!result.canceled) {
                     setImage(result.assets[0]);
+                    setcategoria("higiene")
+                    setUserEmail("test@test")
+                    setFiltro("Estudio")
                     handleCreateActividad();
                 }
             }
@@ -47,44 +90,6 @@ const Tareas = () => {
             console.error("Error al interactuar con la cámara:", error);
         }
     }
-
-
-    //envio de imagen a la api
-    const handleCreateActividad = async () => {
-        try {
-            // Verifica que el email del usuario y la descripción estén disponibles antes de realizar la solicitud POST
-            // const imageContent = image
-            const categoria = "higiene"
-            const filtro = "test"
-            const email = "test@test"
-            if (email && image && image.uri) {
-                const formData = new FormData();
-                formData.append('email', email);
-                formData.append('categoria', categoria);
-                formData.append('filtro', filtro);
-
-                // Convierte la URI del archivo en un objeto File
-                const file = {
-                    uri: image.uri,
-                    type: 'image/jpg',
-                    name: 'image.jpg',
-                };
-
-                formData.append('pictograma', file);
-
-                console.log("formulario", formData);
-
-
-                const result = await createActividad(formData).unwrap();
-                console.log('Respuesta de la API:', result);
-            } else {
-                console.warn('Email del usuario o imagen faltante. No se realizó la solicitud POST.');
-            }
-        } catch (error) {
-            console.error('Error al crear actividad:', error);
-        }
-    };
-        //fin
 
 
         const { data, isLoading, error } = useGetActividadQuery();
