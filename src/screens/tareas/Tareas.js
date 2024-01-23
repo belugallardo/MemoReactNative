@@ -1,75 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
-    Text,
     FlatList,
     Image,
     TextInput,
     TouchableOpacity,
     StyleSheet,
+    useWindowDimensions,
+    ActivityIndicator,
 } from 'react-native';
-import { useGetActividadQuery,useCreateActividadMutation } from '../../fectures/api/apiSlice';
+import { useGetActividadQuery, useCreateActividadMutation } from '../../fectures/api/apiSlice';
 import logoutImage from '../../../assets/logout.png';
 import camera from '../../../assets/camera.png';
 import backImage from '../../../assets/back.png';
-import Camera from '../../components/Camera/camera';
 import * as ImagePicker from 'expo-image-picker';
+import { ScrollView } from 'react-native-gesture-handler';
 
-
-
-const Tareas = () => {
-    //camara
+const Tareas = ({ navigation }) => {
     const [image, setImage] = useState('');
-    const [categoria, setcategoria] = useState(''); // Agrega el estado para la descripción del usuario
-    const [userEmail, setUserEmail] = useState(''); // Agrega el estado para el email del usuario
+    const [categoria, setcategoria] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [filtro, setFiltro] = useState('');
     const [createActividad] = useCreateActividadMutation();
+    const windowWidth = useWindowDimensions().width;
+    const [actividades, setActividades] = useState([]);
+    const { data, isLoading, error, refetch } = useGetActividadQuery();
+    const [loading, setLoading] = useState(false);
 
-    
-    
-    //envio de imagen a la api
+    useEffect(() => {
+        if (data) {
+            setActividades(data.data.document);
+        }
+    }, [data]);
+
     const handleCreateActividad = async () => {
         try {
-            // Verifica que el email del usuario y la descripción estén disponibles antes de realizar la solicitud POST
-            // const imageContent = image
-            // const categoria = "higiene"
-            // const filtro = "test"
-            // const email = "test@test"
+            setLoading(true);
             if (userEmail && image) {
-                console.log(userEmail,image)
                 const formData = new FormData();
                 formData.append('email', userEmail);
                 formData.append('categoria', categoria);
                 formData.append('filtro', filtro);
-                
-                // Convierte la URI del archivo en un objeto File
                 const file = {
                     uri: image.uri,
                     type: 'image/jpg',
                     name: 'image.jpg',
                 };
-                
                 formData.append('pictograma', file);
-                
-                console.log("formulario", formData);
-                
-                
                 const result = await createActividad(formData).unwrap();
                 console.log('Respuesta de la API:', result);
+                if (result.msg) {
+                    
+                    setActividades(prevActividades => [...prevActividades, result]);
+                    
+
+                    refetch();
+
+                } else {
+                    console.warn('La API indicó un problema. No se recargó la lista.');
+                }
             } else {
                 console.warn('Email del usuario o imagen faltante. No se realizó la solicitud POST.');
             }
         } catch (error) {
             console.error('Error al crear actividad:', error);
+        } finally {
+            setLoading(false);
         }
     };
-    //fin
-
 
     const pickImagen = async () => {
-
         try {
-            const { granted } = await ImagePicker.requestCameraPermissionsAsync()
+            const { granted } = await ImagePicker.requestCameraPermissionsAsync();
             console.log("Permisos concedidos:", granted);
             if (granted) {
                 let result = await ImagePicker.launchCameraAsync({
@@ -80,10 +82,9 @@ const Tareas = () => {
                 });
                 if (!result.canceled) {
                     setImage(result.assets[0]);
-                    setcategoria("higiene")
-                    setUserEmail("test@test")
-                    setFiltro("Estudio")
-                    handleCreateActividad();
+                    setcategoria("higiene");
+                    setUserEmail("test@test");
+                    setFiltro("Estudio");
                 }
             }
         } catch (error) {
@@ -92,131 +93,160 @@ const Tareas = () => {
     }
 
 
-        const { data, isLoading, error } = useGetActividadQuery();
-        const [selectedImages, setSelectedImages] = useState(new Set());
-        const [searchTerm, setSearchTerm] = useState('');
+    useEffect(() => {
+        if (userEmail && image) {
+            handleCreateActividad();
+            refetch();
+        }
+    }, [userEmail, image, refetch]);
 
-        const toggleImageSelection = (imageUrl) => {
-            const newSelectedImages = new Set(selectedImages);
-            if (newSelectedImages.has(imageUrl)) {
-                newSelectedImages.delete(imageUrl);
-            } else {
-                newSelectedImages.add(imageUrl);
-            }
-            setSelectedImages(newSelectedImages);
-        };
+    const [selectedImages, setSelectedImages] = useState(new Set());
+    const [searchTerm, setSearchTerm] = useState('');
 
-        const renderImageUrlItem = ({ item }) => {
-            // Filtra las imágenes según el término de búsqueda en el campo "filtro"
-            if (searchTerm && !item.filtro.some((filtroItem) => filtroItem.includes(searchTerm))) {
-                return null;
-            }
-
-            return (
-                <TouchableOpacity
-                    style={[
-                        styles.imageContainer,
-                        selectedImages.has(item.imageUrl) && styles.selectedImageContainer,
-                    ]}
-                    onPress={() => toggleImageSelection(item.imageUrl)}
-                >
-                    <Image source={{ uri: item.imageUrl }} style={styles.imageStyle} />
-                </TouchableOpacity>
-            );
-        };
-
+    const toggleImageSelection = (imageUrl) => {
+        const newSelectedImages = new Set(selectedImages);
+        if (newSelectedImages.has(imageUrl)) {
+            newSelectedImages.delete(imageUrl);
+        } else {
+            newSelectedImages.add(imageUrl);
+        }
+        setSelectedImages(newSelectedImages);
+    };
+    const renderImageUrlItem = ({ item }) => {
+        const tieneTerminoBusqueda = searchTerm.trim().length > 0;
+        const coincideConTerminoBusqueda = tieneTerminoBusqueda
+            ? item.filtro.some((filtroItem) => filtroItem.toLowerCase().includes(searchTerm.toLowerCase()))
+            : true;
+    
+        if (!coincideConTerminoBusqueda) {
+            return null;
+        }
+    
 
         return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Buscar por filtro"
-                    value={searchTerm}
-                    onChangeText={(text) => setSearchTerm(text)}
-                />
-                <View style={styles.pictogramas}>
-                    <FlatList
-                        data={data ? data.data.document : []}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={renderImageUrlItem}
-                        horizontal={true} // Cambio: renderiza las imágenes en posición horizontal
-                        contentContainerStyle={styles.pictogramas} // Cambio: estilo para el contenedor de FlatList
-                    />
-                </View>
-
-                <View style={styles.blueButtonContainer}>
-                    <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
-                        <Image source={backImage} style={styles.imageStyleButton} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.blueButton} onPress={pickImagen}>
-                        <Image source={camera} style={styles.imageStyleButton} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
-                        <Image source={logoutImage} style={styles.imageStyleButton} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-
-
+            <TouchableOpacity
+                style={[
+                    styles.imageContainer,
+                    selectedImages.has(item.imageUrl) && styles.selectedImageContainer,
+                ]}
+                onPress={() => toggleImageSelection(item.imageUrl)}
+            >
+                <Image source={{ uri: item.imageUrl }} style={styles.imageStyle} />
+            </TouchableOpacity>
         );
     };
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            padding: 20,
-        },
-        input: {
-            height: 40,
-            borderWidth: 1,
-            borderColor: '#ccc',
-            marginBottom: 10,
-            paddingHorizontal: 10,
-        },
-        addButton: {
-            backgroundColor: 'lightblue',
-            padding: 10,
-            alignItems: 'center',
-            marginBottom: 10,
-        },
-        imageStyle: {
-            width: 70,
-            height: 70,
+    return (
+        <View style={styles.container}>
+            <TextInput
+                style={styles.input}
+                placeholder="Buscar por filtro"
+                value={searchTerm}
+                onChangeText={(text) => setSearchTerm(text)}
+            />
+            <View style={styles.pictogramas}>
+                {isLoading || loading ? (
+                    
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </View>
+                ) : (
+                    <View style={styles.contenedorImagenes} > 
+                    <FlatList
+                        data={actividades}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={renderImageUrlItem}
+                        numColumns={3}
+                        contentContainerStyle={styles.pictogramas}
+                        style={styles.flatList}
+                    />
+                    </View>
+                    )}
+                    </View>
 
-        },
-        imageContainer: {
-            margin: 5,
-            borderWidth: 2,
-            borderColor: '#ccc',
-            borderRadius: 8,
-            overflow: 'hidden',
-            flexWrap: 'wrap',
-            flexDirection: 'row', // Cambio: establecer dirección de fila
-            alignItems: 'center', // Cambio: centrar verticalmente las imágenes
-        },
+            <View style={styles.blueButtonContainer}>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                    <Image source={backImage} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.blueButton} onPress={pickImagen}>
+                    <Image source={camera} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                    <Image source={logoutImage} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+};
 
-        selectedImageContainer: {
-            borderColor: 'blue', // Puedes cambiar el color para indicar la selección
-        },
-        blueButtonContainer: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 35,
-        },
-        imageStyleButton: {
-            width: 70,
-            height: 70,
-        },
-        pictogramas: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center'
-        }
-    });
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
 
-    export default Tareas;
+    },
+    input: {
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+    addButton: {
+        backgroundColor: 'lightblue',
+        padding: 10,
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    imageStyle: {
+        width: 100,
+        height: 100,
+
+    },
+    imageContainer: {
+        margin: 7,
+        borderWidth: 2,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        overflow: 'hidden',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    selectedImageContainer: {
+        borderColor: 'blue',
+    },
+    blueButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginTop: 'auto',
+        
+
+    },
+    imageStyleButton: {
+        width: 70,
+        height: 70,
+    },
+    pictogramas: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 
 
 
+});
+
+export default Tareas;
