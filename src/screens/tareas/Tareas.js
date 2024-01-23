@@ -14,7 +14,7 @@ import logoutImage from '../../../assets/logout.png';
 import camera from '../../../assets/camera.png';
 import backImage from '../../../assets/back.png';
 import * as ImagePicker from 'expo-image-picker';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 const Tareas = ({ navigation }) => {
     const [image, setImage] = useState('');
@@ -151,7 +151,7 @@ const Tareas = ({ navigation }) => {
                         <ActivityIndicator size="large" color="#0000ff" />
                     </View>
                 ) : (
-                    <View style={styles.contenedorImagenes} > 
+                    
                     <FlatList
                         data={actividades}
                         keyExtractor={(item, index) => index.toString()}
@@ -160,9 +160,9 @@ const Tareas = ({ navigation }) => {
                         contentContainerStyle={styles.pictogramas}
                         style={styles.flatList}
                     />
-                    </View>
+                    
                     )}
-                    </View>
+            </View>
 
             <View style={styles.blueButtonContainer}>
                 <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
@@ -189,8 +189,6 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderColor: '#ccc',
-        marginBottom: 10,
-        paddingHorizontal: 10,
     },
     addButton: {
         backgroundColor: 'lightblue',
@@ -199,8 +197,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     imageStyle: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
 
     },
     imageContainer: {
@@ -208,12 +206,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#ccc',
         borderRadius: 8,
-        overflow: 'hidden',
-        flexWrap: 'wrap',
         flexDirection: 'row',
         alignItems: 'center',
     },
-
     selectedImageContainer: {
         borderColor: 'blue',
     },
@@ -223,21 +218,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         marginTop: 'auto',
+        marginBottom:30,
         
-
     },
     imageStyleButton: {
         width: 70,
         height: 70,
     },
     pictogramas: {
-        justifyContent: 'center',
         alignItems: 'center',
-        flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-
+        margin: 15,
     },
     loadingContainer: {
         flex: 1,

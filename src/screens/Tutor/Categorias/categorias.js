@@ -29,16 +29,16 @@ const CategoriasTutor = () => {
                 <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
                     <Text style={styles.buttonText}>HIGIENE</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
                     <Text style={styles.buttonText}>ALIMENTACION</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
                     <Text style={styles.buttonText}>RECREACION</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
                     <Text style={styles.buttonText}>ESCUELA</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
                     <Text style={styles.buttonText}>EXTRAS</Text>
                 </TouchableOpacity>
             </View>
