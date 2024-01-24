@@ -17,32 +17,34 @@ const CategoriasTutor = () => {
         console.log("Valor de esarData", esarData);
     }, [esarData]);
 
-    const goToTareas = () => {
-        navigation.navigate('Tareas'); 
-      };
+    const goToTareas = (categoria) => {
+        navigation.navigate('Tareas', { categoria });
+    };
+
 
     return (
-    <View>   
-        <View style={styles.container}>
-            <Text>CTEGORIAS</Text>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
-                    <Text style={styles.buttonText}>HIGIENE</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
-                    <Text style={styles.buttonText}>ALIMENTACION</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
-                    <Text style={styles.buttonText}>RECREACION</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
-                    <Text style={styles.buttonText}>ESCUELA</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToTareas}>
-                    <Text style={styles.buttonText}>EXTRAS</Text>
-                </TouchableOpacity>
+        <View>
+            <View style={styles.container}>
+                <Text>CTEGORIAS</Text>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('higiene')}>
+                        <Text style={styles.buttonText}>HIGIENE</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('alimentacion')}>
+                        <Text style={styles.buttonText}>ALIMENTACION</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('recreacion')}>
+                        <Text style={styles.buttonText}>RECREACION</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('escuela')}>
+                        <Text style={styles.buttonText}>ESCUELA</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('extras')}>
+                        <Text style={styles.buttonText}>EXTRAS</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
             <View style={styles.blueButtonContainer}>
                 <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
                     <Image source={backImage} style={styles.imageStyle} />
@@ -51,18 +53,18 @@ const CategoriasTutor = () => {
                     <Image source={logoutImage} style={styles.imageStyle} />
                 </TouchableOpacity>
             </View>
-    </View>    
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
 
-    container:{
+    container: {
         alignItems: 'center',
     },
 
     customButton: {
-        
+
         width: 300,
         marginTop: 19,
         marginBottom: 0,

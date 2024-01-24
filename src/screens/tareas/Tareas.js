@@ -16,7 +16,7 @@ import backImage from '../../../assets/back.png';
 import * as ImagePicker from 'expo-image-picker';
 
 
-const Tareas = ({ navigation }) => {
+const Tareas = ({ navigation, route }) => {
     const [image, setImage] = useState('');
     const [categoria, setcategoria] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -24,7 +24,14 @@ const Tareas = ({ navigation }) => {
     const [createActividad] = useCreateActividadMutation();
     const windowWidth = useWindowDimensions().width;
     const [actividades, setActividades] = useState([]);
-    const { data, isLoading, error, refetch } = useGetActividadQuery();
+    // const { data, isLoading, error, refetch } = useGetActividadQuery();
+    const { categoria: categoriaParam } = route.params || {};
+    console.log('Valor de categoriaParam desde el componente anterior:',  categoriaParam);
+
+    const { data, isLoading, error, refetch } = useGetActividadQuery({
+        categoria: categoriaParam, // Asegúrate de que 'categoria' sea el nombre correcto de tu parámetro
+    });
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -82,7 +89,7 @@ const Tareas = ({ navigation }) => {
                 });
                 if (!result.canceled) {
                     setImage(result.assets[0]);
-                    setcategoria("higiene");
+                    setcategoria(categoriaParam);
                     setUserEmail("test@test");
                     setFiltro("Estudio");
                 }

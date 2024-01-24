@@ -5,7 +5,8 @@ export const apiMemoSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://memo-back-dev-zkmd.1.ie-1.fl0.io' }),
   endpoints: builder => ({
     getActividad: builder.query({
-      query: () => '/actividad/params'
+      query: (params) => `/actividad/params?categoria=${params.categoria}`,
+      // query: () => '/actividad/params'
     }),
     createActividad: builder.mutation({
       query: (newActividad) => {
