@@ -17,10 +17,10 @@ const HomeTutor = () => {
         console.log("Valor de esarData", esarData);
     }, [esarData]);
 
-    const goToCategoriasTutor = () => {
-        navigation.navigate('CategoriasTutor'); 
+    const goToSemana = () => {
+        navigation.navigate('Semana'); 
       };
-
+// OJO cambiar ruta a funcion flecha
     return (
         <View style={styles.container}>
             <Text>{esarData}</Text>
@@ -34,7 +34,7 @@ const HomeTutor = () => {
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>
                     <Text style={styles.buttonText}>MI CARNET</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToCategoriasTutor}>
+                <TouchableOpacity style={styles.customButton} onPress={goToSemana}>
                     <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>

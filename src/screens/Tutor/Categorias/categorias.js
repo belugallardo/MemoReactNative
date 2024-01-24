@@ -9,9 +9,6 @@ const CategoriasTutor = () => {
     const navigation = useNavigation();
     const { esarData } = route.params || {};
 
-    const handleClick = () => {
-        alert('Botón personalizado clickeado');
-    };
 
     useEffect(() => {
         console.log("Valor de esarData", esarData);

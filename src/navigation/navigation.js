@@ -8,6 +8,8 @@ import { HomeLogin } from '../screens/HomeLogin/HomeLogin';
 import HomeInicio from '../screens/HomeInicio/HomeInicio';
 import EnConstruccion from '../screens/EnConstruccion/EnContruccion';
 import CategoriasTutor from '../screens/Tutor/Categorias/categorias';
+import Semana from '../screens/Tutor/Semana/Semana';
+import Dia from '../screens/Tutor/Dia/Dia';
 
 
 const Stack = createStackNavigator();
@@ -23,6 +25,8 @@ function StackNavigator() {
       <Stack.Screen name="SelecTutorUser" component={SelecTutorUser} />
       <Stack.Screen name="EnConstruccion" component={EnConstruccion} />
       <Stack.Screen name="CategoriasTutor" component={CategoriasTutor} />
+      <Stack.Screen name="Semana" component={Semana} />
+      <Stack.Screen name="Dia" component={Dia} />
       {/* <Stack.Screen name="Settings" component={Settings} /> */}
     </Stack.Navigator>
   );
