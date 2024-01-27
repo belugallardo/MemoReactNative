@@ -5,28 +5,13 @@ import CustomButton from '../../components/ButtonMemo/Button';
 import GoogleButton from '../../components/ButtonGoogle/ButtonGoogle';
 
 const HomeInicio = ({ navigation }) => {
-  const goToLogin = () => {
+
+  const goToRegistro = () => {
+    navigation.navigate('Registro');
+  };
+
+  const goLogin = () => {
     navigation.navigate('Login');
-  };
-
-  const goToEnconstruccion = () => {
-    navigation.navigate('EnConstruccion');
-  };
-
-  const goToTareas = () => {
-    navigation.navigate('Tareas');
-  };
-
-  const goToHomeTutor = () => {
-    navigation.navigate('HomeTutor');
-  };
-
-  const goToUsuario = () => {
-    navigation.navigate('HomeUsuario');
-  };
-
-  const goSelecTutorUser = () => {
-    navigation.navigate('SelecTutorUser');
   };
 
 
@@ -42,10 +27,10 @@ const HomeInicio = ({ navigation }) => {
 
       <View style={styles.botonComenzar}>
         <TouchableOpacity>
-          <CustomButton text="LOGIN" estilo="customButton" onPress={goSelecTutorUser} />
+          <CustomButton text="LOGIN" estilo="customButton" onPress={goLogin} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToEnconstruccion} />
+          <CustomButton text="REGISTRO" estilo="customButtonAzul" onPress={goToRegistro} />
         </TouchableOpacity>
       </View>
     </View>

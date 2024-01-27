@@ -4,9 +4,8 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import backImage from '../../../../assets/back.png';
 import logoutImage from '../../../../assets/logout.png';
 
-const HomeTutor = () => {
+const HomeTutor = ({navigation}) => {
     const route = useRoute();
-    const navigation = useNavigation();
     const { esarData } = route.params || {};
 
     const handleClick = () => {
@@ -18,34 +17,40 @@ const HomeTutor = () => {
     }, [esarData]);
 
     const goToSemana = () => {
-        navigation.navigate('Semana'); 
-      };
-// OJO cambiar ruta a funcion flecha
+        navigation.navigate('Semana');
+    };
+    const goHomeUsuario = () => {
+        navigation.navigate('HomeUsuario');
+    };
+    
+    // OJO cambiar ruta a funcion flecha
     return (
-        <View style={styles.container}>
+        <View >
             <Text>{esarData}</Text>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>MANUAL DE USO</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>AVATAR</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>MI CARNET</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={goToSemana}>
-                    <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>COMUNICACION</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>AJUSTES</Text>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                        <Text style={styles.buttonText}>MANUAL DE USO</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                        <Text style={styles.buttonText}>AVATAR</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                        <Text style={styles.buttonText}>MI CARNET</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={goToSemana}>
+                        <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                        <Text style={styles.buttonText}>COMUNICACION</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                        <Text style={styles.buttonText}>AJUSTES</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={styles.blueButtonContainer}>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
@@ -57,7 +62,9 @@ const HomeTutor = () => {
 };
 
 const styles = StyleSheet.create({
-
+    container: {
+        alignItems: 'center',
+    },
     customButton: {
         width: 300,
         marginTop: 19,
@@ -73,6 +80,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 25,
         letterSpacing: 3,
+        alignItems: 'center',
     },
     blueButtonContainer: {
         flexDirection: 'row',
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
         height: 70,
     },
     buttonContainer: {
-        marginTop: 100
+        marginTop: 40
     }
 });
 
