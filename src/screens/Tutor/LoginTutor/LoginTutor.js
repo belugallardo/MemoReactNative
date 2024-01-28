@@ -13,7 +13,7 @@ const LoginTutor = ({ navigation }) => {
     const [passInvalid, setPassInvalid] = useState('');
     const [tempError, setTempError] = useState('');
     
-    console.log('Esto llega de password', password)
+    
     useEffect(() => {
         setEmail(idEmail || ''); 
     }, [idEmail]);

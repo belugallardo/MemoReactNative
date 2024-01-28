@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import { useSignupMutation } from '../../fectures/autenticacion/autenticacion';
+import { useCreateUserMutation } from '../../fectures/api/apiSlice';
 
 const Registro = ({ navigation }) => {
     const [triggerSignup, { data, isError, isSuccess, error, isLoading }] = useSignupMutation();
@@ -11,6 +12,7 @@ const Registro = ({ navigation }) => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [passwordMatchError, setPasswordMatchError] = useState('');
+    const [createUser] = useCreateUserMutation();
 
     console.log(data, isSuccess, error)
     useEffect(() => {
@@ -53,6 +55,8 @@ const Registro = ({ navigation }) => {
 
         if (email && password && confirmPassword && password === confirmPassword) {
             triggerSignup({ email, password });
+            createUser({email});
+
         }
     };
 

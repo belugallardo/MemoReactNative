@@ -8,7 +8,7 @@ import authReducer from '../fectures/estadoAutenticacion/estadoAutenticacion'
 export const store = configureStore({
   reducer: {
     tareas:tareasReducer,
-    actividad: apiMemoSlice.reducer,  
+    api: apiMemoSlice.reducer, 
     auth:authReducer,
     [apiMemoSlice.reducerPath]: apiMemoSlice.reducer,
     [apiAut.reducerPath]: apiAut.reducer

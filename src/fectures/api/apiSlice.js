@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiMemoSlice = createApi({
   reducerPath: 'apiMemo',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://memo-back-dev-zkmd.1.ie-1.fl0.io' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://memo-back-dev-zkmd.1.ie-1.fl0.io/api' }),
   endpoints: builder => ({
     getActividad: builder.query({
       query: (params) => `/actividad/params?categoria=${params.categoria}`,
@@ -18,7 +18,17 @@ export const apiMemoSlice = createApi({
         };
       },
     }),
+    createUser: builder.mutation({
+      query: (email) => {
+        console.log('Solicitud POST:', email); // Agrega este console.log
+        return {
+          url: '/login/registerMovilUser',
+          method: 'POST',
+          body: email,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation } = apiMemoSlice;
