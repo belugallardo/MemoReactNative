@@ -28,7 +28,17 @@ export const apiMemoSlice = createApi({
         };
       },
     }),
+    addPictograma: builder.mutation({
+      query: (data) => {
+        console.log('Solicitud POST add:', data); // Agrega este console.log
+        return {
+          url: '/rutinas/update',
+          method: 'POST',
+          body: data,
+        };
+      },
+    })
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation } = apiMemoSlice;

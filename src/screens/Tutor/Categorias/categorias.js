@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import backImage from '../../../../assets/back.png';
-import logoutImage from '../../../../assets/logout.png';
+import home from '../../../../assets/home.png';
 
-const CategoriasTutor = () => {
+const CategoriasTutor = (params) => {
     const route = useRoute();
     const navigation = useNavigation();
-    const { esarData } = route.params || {};
-
-
-    useEffect(() => {
-        console.log("Valor de esarData", esarData);
-    }, [esarData]);
+    const { momento, dia } = route.params;
+    console.log("Esto llega como dia y momento",momento, dia)
+   
 
     const goToTareas = (categoria) => {
-        navigation.navigate('Tareas', { categoria });
+        navigation.navigate('Tareas', { categoria, momento, dia });
     };
+    const goHomeUsuario = () => {
+        navigation.navigate('HomeUsuario')
+    }
 
 
     return (
@@ -46,8 +46,8 @@ const CategoriasTutor = () => {
                 <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
-                    <Image source={logoutImage} style={styles.imageStyle} />
+                <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
+                    <Image source={home} style={styles.imageStyle} />
                 </TouchableOpacity>
             </View>
         </View>

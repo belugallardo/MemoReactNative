@@ -6,7 +6,7 @@ const Dia = ({ navigation, route }) => {
     const { dia } = route.params;
 
     const goToCategorias = (momento) => {
-        navigation.navigate('CategoriasTutor', { momento });
+        navigation.navigate('CategoriasTutor', { momento, dia });
     };
 
     console.log(dia)
