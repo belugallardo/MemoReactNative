@@ -13,6 +13,9 @@ const HomeUsuario = ({navigation}) => {
     const goHomeTutor =()=>{
         navigation.navigate('LoginTutor')
     }
+    const goRutinaUsuario =()=>{
+        navigation.navigate('RutinaUsuario')
+    }
 
 
     return (
@@ -21,7 +24,7 @@ const HomeUsuario = ({navigation}) => {
                     <FontAwesome style={styles.buttonTextTutor} name="user" />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goRutinaUsuario}>
                     <Text style={styles.buttonText}>RUTINAS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.customButton} onPress={handleClick}>

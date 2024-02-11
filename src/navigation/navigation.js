@@ -13,6 +13,7 @@ import Dia from '../screens/Tutor/Dia/Dia';
 import Registro from '../screens/Registro/Registro';
 import { useSelector } from 'react-redux';
 import LoginTutor from '../screens/Tutor/LoginTutor/LoginTutor';
+import RutinaUsuario from '../screens/Usuario/RutinaUsuario/RutinaUsuario';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ function StackNavigator() {
         <Stack.Screen name="Semana" component={Semana} />
         <Stack.Screen name="Dia" component={Dia} />
         <Stack.Screen name="LoginTutor" component={LoginTutor} />
+        <Stack.Screen name="RutinaUsuario" component={RutinaUsuario} />
         </>
       ) : (
         // Usuario no autenticado, mostrar otras pantallas

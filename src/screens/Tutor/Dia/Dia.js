@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react
 import { useDispatch, useSelector } from 'react-redux';
 import { setDia } from '../../../fectures/estadoCOmponente/estadoComponente';
 import { useEditPictoMutation, useGetRutinaEmailQuery } from '../../../fectures/api/apiSlice';
-
+import backImage from '../../../../assets/back.png';
+import homeUsuario from '../../../../assets/home.png';
 
 const Dia = ({ navigation, route }) => {
     const dispatch = useDispatch();
@@ -17,6 +18,13 @@ const Dia = ({ navigation, route }) => {
         dispatch(setDia({ dia: diaEstado, momento }));
         navigation.navigate('CategoriasTutor', { momento });
     };
+    const goHomeUsuario = () => {
+        navigation.navigate('HomeUsuario')
+    }
+
+    const goHomeTutor = () => {
+        navigation.navigate('HomeTutor')
+    }
 
     const { data, isLoading, error, refetch } = useGetRutinaEmailQuery(email);
 
@@ -126,7 +134,17 @@ const Dia = ({ navigation, route }) => {
             {renderSeccion('manana')}
             {renderSeccion('tarde')}
             {renderSeccion('noche')}
+            <View style={styles.blueButtonContainer}>
+                <TouchableOpacity style={styles.blueButton} onPress={goHomeTutor}>
+                    <Image source={backImage} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
+                    <Image source={homeUsuario} style={styles.imageStyleButton} />
+                </TouchableOpacity>
+            </View>
         </View>
+
+        
     );
 };
 
@@ -229,6 +247,25 @@ const styles = StyleSheet.create({
     },
     selectedImageContainer: {
         borderColor: 'blue',
+    },
+    blueButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 35,
+        marginHorizontal:45,
+    },
+    blueButton: {
+        width: 30,
+        height: 60,
+        marginTop: 1,
+        borderRadius: 100,
+        backgroundColor: '#0a06f1',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imageStyleButton: {
+        width: 70,
+        height: 70,
     },
 });
 
