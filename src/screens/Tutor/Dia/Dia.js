@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDia } from '../../../fectures/estadoCOmponente/estadoComponente';
-import { useGetRutinaEmailQuery } from '../../../fectures/api/apiSlice';
+import { useEditPictoMutation, useGetRutinaEmailQuery } from '../../../fectures/api/apiSlice';
 
 
 const Dia = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const infoRedux = useSelector((state) => state.setdia);
     const { dia: diaEstado } = infoRedux.value;
+    const authState = useSelector((state) => state.auth);
+    const email = authState.value.email;
+    const [edPicto] = useEditPictoMutation();
 
     const goToCategorias = (momento) => {
         dispatch(setDia({ dia: diaEstado, momento }));
         navigation.navigate('CategoriasTutor', { momento });
     };
 
-    const { data, isLoading, error, refetch } = useGetRutinaEmailQuery('emy@gmail.com');
+    const { data, isLoading, error, refetch } = useGetRutinaEmailQuery(email);
 
     useEffect(() => {
         if (isLoading) {
@@ -32,7 +35,9 @@ const Dia = ({ navigation, route }) => {
 
     const [modoEdicion, setModoEdicion] = useState(false);
     const [selectedImages, setSelectedImages] = useState(new Set());
-    const [selectedImageURL, setSelectedImageURL] = useState('');
+    //const [selectedImageURL, setSelectedImageURL] = useState('');
+    const [momento, setMomento] = useState(''); // Nuevo estado para almacenar el momento del día seleccionado
+    const [selectedImageIndex, setSelectedImageIndex] = useState(-1); // Nuevo estado para almacenar el índice de la ima
 
     const activarModoEdicion = () => {
         setModoEdicion(true);
@@ -41,60 +46,45 @@ const Dia = ({ navigation, route }) => {
     const desactivarModoEdicion = () => {
         setModoEdicion(false);
         setSelectedImages(new Set());
+        setSelectedImageIndex(-1);
+    };
+
+    const pictoAEliminar = {
+        email: email,
+        dia: diaEstado,
+        horario: momento,
+        index: selectedImageIndex
     };
 
 
-    const eliminarImagen = () => {
-        // Utiliza selectedImageURL y momento para realizar las acciones necesarias
-        console.log(`Eliminar imagen: ${selectedImageURL} en el momento ${momento}`);
-    
-        const nuevasImagenes = datosAlmacenados.map((item) => {
-            const nuevasRutinas = { ...item };
-            Object.keys(nuevasRutinas).forEach((momento) => {
-                nuevasRutinas[momento.toLowerCase()] = nuevasRutinas[momento.toLowerCase()].filter(
-                    (url) => !selectedImages.has(url)
-                );
-            });
-            console.log(nuevasRutinas);
-            return nuevasRutinas;
-        });
-    
-        // Aquí puedes agregar la lógica para enviar las imágenes eliminadas a la API si es necesario
-        // refetch();
-    
-        desactivarModoEdicion(); // Desactivar el modo de edición y limpiar las imágenes seleccionadas
+    const eliminarImagen = async () => {
+
+        await edPicto(pictoAEliminar);
+        refetch();
+        desactivarModoEdicion(); // Desactivar el modo de edición y limpiar la selección de imágenes
+
     };
-    
 
 
-    const toggleImageSelection = (imageUrl) => {
-        const newSelectedImages = new Set(selectedImages);
-        if (newSelectedImages.has(imageUrl)) {
-            newSelectedImages.delete(imageUrl);
-            setSelectedImageURL('');
-        } else {
-            newSelectedImages.add(imageUrl);
-            setSelectedImageURL(imageUrl);
-        }
-        setSelectedImages(newSelectedImages);
-    
-        // Ahora `selectedImageURL` contiene la URL de la imagen seleccionada y `diaEstado` contiene el momento asociado.
+    const toggleImageSelection = (imageUrl, index, momento) => {
+        console.log('esto llega en el toggle', imageUrl, index, momento);
+        setSelectedImageIndex(index); // Almacenar el índice de la imagen seleccionada
+        setMomento(momento); // Almacenar el momento del día actual
+        setSelectedImages(new Set([`${momento}_${index}`])); // Almacenar la combinación de momento e índice como identificador único de la imagen seleccionada
     };
-    
-    
-    const renderIcon = ({ item, index }) => (
+
+    const renderIcon = ({ item, index, momento }) => (
         <TouchableOpacity
             key={index}
             style={[
                 styles.imageContainer,
-                selectedImages.has(item) && styles.selectedImageContainer,
+                selectedImages.has(`${momento}_${index}`) && styles.selectedImageContainer,
             ]}
-            onPress={() => modoEdicion && toggleImageSelection(item)}
+            onPress={() => modoEdicion && toggleImageSelection(item, index, momento)}
         >
             <Image source={{ uri: item }} style={styles.imageStyle} />
         </TouchableOpacity>
     );
-    
     const renderSeccion = (momento) => (
         <View>
             <Text style={styles.text}>{momento}</Text>
@@ -105,7 +95,7 @@ const Dia = ({ navigation, route }) => {
                 <FlatList
                     data={datosAlmacenados[0]?.[momento.toLowerCase()] || []}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderIcon}
+                    renderItem={({ item, index }) => renderIcon({ item, index, momento })}
                     numColumns={3}
                     contentContainerStyle={styles.pictogramas}
                     style={styles.flatList}
@@ -113,6 +103,7 @@ const Dia = ({ navigation, route }) => {
             </View>
         </View>
     );
+
 
     return (
         <View>
@@ -132,12 +123,14 @@ const Dia = ({ navigation, route }) => {
                 )}
             </View>
 
-            {renderSeccion('MANANA')}
-            {renderSeccion('TARDE')}
-            {renderSeccion('NOCHE')}
+            {renderSeccion('manana')}
+            {renderSeccion('tarde')}
+            {renderSeccion('noche')}
         </View>
     );
 };
+
+
 
 const styles = StyleSheet.create({
     titulo: {

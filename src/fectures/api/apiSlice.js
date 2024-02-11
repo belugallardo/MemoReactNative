@@ -44,7 +44,18 @@ export const apiMemoSlice = createApi({
         return `/rutinas/${email}`;
       },
     }),
+
+    editPicto: builder.mutation({
+      query: (data) => {
+        console.log('Solicitud POST:', data); // Agrega este console.log
+        return {
+          url: '/rutinas/editArray',
+          method: 'POST',
+          body: data,
+        };
+      },
+    })
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery, useEditPictoMutation } = apiMemoSlice;
