@@ -37,8 +37,14 @@ export const apiMemoSlice = createApi({
           body: data,
         };
       },
-    })
+    }),
+    getRutinaEmail: builder.query({
+      query: (email) => {
+        console.log('Solicitud GET Rutina por Email:', email); // Add this console.log
+        return `/rutinas/${email}`;
+      },
+    }),
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery } = apiMemoSlice;

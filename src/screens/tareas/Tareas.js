@@ -28,11 +28,12 @@ const Tareas = ({ navigation, route }) => {
     const [actividades, setActividades] = useState([]);
     //const { data, isLoading, error, refetch } = useGetActividadQuery();
     const { categoria: categoriaParam } = route.params || {};
-    const { dia: diaParam } = route.params || {};
-    const { momento: horarioParam } = route.params || {};
-    const diaEnMinusculas = diaParam.toLowerCase();
-
-   
+    // const { dia: diaParam } = route.params || {};
+    // const { momento: horarioParam } = route.params || {};
+    // const diaEnMinusculas = diaParam.toLowerCase();
+const infoRedux = useSelector((state) => state.setdia);
+   const diaEnMinusculas = infoRedux.value.dia;
+   const momentoEstado = infoRedux.value.momento;
     //console.log('Valor de categoriaParam desde el componente anterior:', categoriaParam);
 
     //redux
@@ -44,7 +45,7 @@ const Tareas = ({ navigation, route }) => {
     });
 
     const [loading, setLoading] = useState(false);
-   console.log(" que llega? ", diaEnMinusculas, horarioParam)
+  
     
     useEffect(() => {
         if (data) {
@@ -182,7 +183,7 @@ const Tareas = ({ navigation, route }) => {
         const infoImagen = {
             email:email,
             dia:diaEnMinusculas,
-            horario:horarioParam,
+            horario:momentoEstado,
             valor:selectedImageURL
         };
       
@@ -191,6 +192,16 @@ const Tareas = ({ navigation, route }) => {
        console.log("este es el erro Picto", infoImagen)
     }
 
+    const volverADia = async () => {
+        try {
+            await addPictograma();
+            navigation.navigate('Dia');
+        } catch (error) {
+            console.error('Error en addPictograma:', error);
+        }
+    }
+    
+    
     return (
         <View style={styles.container}>
             <TextInput
@@ -226,7 +237,7 @@ const Tareas = ({ navigation, route }) => {
                 <TouchableOpacity style={styles.blueButton} onPress={pickImagen}>
                     <Image source={camera} style={styles.imageStyleButton} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.blueButton} onPress={addPictograma}>
+                <TouchableOpacity style={styles.blueButton} onPress={volverADia}>
                     <Image source={accept} style={styles.imageStyleButton} />
                 </TouchableOpacity>
             </View>

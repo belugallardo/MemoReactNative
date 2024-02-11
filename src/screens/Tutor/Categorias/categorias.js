@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import backImage from '../../../../assets/back.png';
 import home from '../../../../assets/home.png';
 
 const CategoriasTutor = (params) => {
     const route = useRoute();
     const navigation = useNavigation();
-    const { momento, dia } = route.params;
-    console.log("Esto llega como dia y momento",momento, dia)
+    const infoRedux = useSelector((state) => state.setdia);
+    const  diaEstado  = infoRedux.value.dia;
+    const momentoEstado = infoRedux.value.momento;
+    console.log("Esto llega como dia y momento",momentoEstado, diaEstado)
    
 
     const goToTareas = (categoria) => {
-        navigation.navigate('Tareas', { categoria, momento, dia });
+        navigation.navigate('Tareas', { categoria, momentoEstado, diaEstado });
     };
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario')
@@ -43,7 +46,7 @@ const CategoriasTutor = (params) => {
                 </View>
             </View>
             <View style={styles.blueButtonContainer}>
-                <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('Home')}>
+                <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>

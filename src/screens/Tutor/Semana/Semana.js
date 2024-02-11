@@ -4,11 +4,16 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import backImage from '../../../../assets/back.png';
 import homeUsuario from '../../../../assets/home.png';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import { setDia } from '../../../fectures/estadoCOmponente/estadoComponente';
 
 const Semana = ({navigation}) => {
+    const dispatch = useDispatch();
     const route = useRoute();
 
     const goToDia = (dia) => {
+        console.log(dia)
+        dispatch(setDia({ dia, momento: null }));
         navigation.navigate('Dia', { dia });
     };
 
@@ -26,25 +31,25 @@ const Semana = ({navigation}) => {
                 <ScrollView>
                     <View style={styles.buttonContainer}>
 
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('LUNES')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('lunes')}>
                             <Text style={styles.buttonText}>LUNES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('MARTES')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('martes')}>
                             <Text style={styles.buttonText}>MARTES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('MIERCOLES')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('miercoles')}>
                             <Text style={styles.buttonText}>MIERCOLES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('JUEVES')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('jueves')}>
                             <Text style={styles.buttonText}>JUEVES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('VIERNES')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('viernes')}>
                             <Text style={styles.buttonText}>VIERNES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('SABADO')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('sabado')}>
                             <Text style={styles.buttonText}>SABADO</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('DOMINGO')}>
+                        <TouchableOpacity style={styles.customButton} onPress={() => goToDia('domingo')}>
                             <Text style={styles.buttonText}>DOMINGO</Text>
                         </TouchableOpacity>
                     </View>

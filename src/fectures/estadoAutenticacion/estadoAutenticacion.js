@@ -14,7 +14,7 @@ export const authSlice = createSlice({
         setUser: (state, action) => {
             state.value.email = action.payload.email;
             state.value.idToken = action.payload.idToken;  
-            console.log("Esto esta en estado redux",state.value)
+            console.log("Esto esta en estado redux login",state.value)
         }
     },
 });
