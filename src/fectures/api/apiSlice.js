@@ -54,8 +54,21 @@ export const apiMemoSlice = createApi({
           body: data,
         };
       },
-    })
+    }),
+    editCarnet: builder.mutation({
+      query:(data) => {
+        const email = data.email;
+        const carnet = data.card;
+        
+        console.log('Solicitud post carnet', email, 'esto es el carnet', carnet);
+        return{
+          url: `/login/update/${email}`,
+          method: 'POST',
+          body: carnet,
+        }
+      }
+    }) 
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery, useEditPictoMutation } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery, useEditPictoMutation, useEditCarnetMutation } = apiMemoSlice;

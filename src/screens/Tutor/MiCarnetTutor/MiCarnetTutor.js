@@ -1,19 +1,34 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useEditCarnetMutation } from '../../../fectures/api/apiSlice';
 
 const MiCarnetTutor = ({navigation}) => {
 
     const [apodo, setApodo] = useState('');
     const [datos, setDatos] = useState('');
     const [contacto, setContacto] = useState('');
+    const [rutaCarnet] = useEditCarnetMutation();
 
+    const authState = useSelector((state) => state.auth);
+    const email = authState.value.email;
 
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario');
     }
 
+    const card = {
+        card:[apodo,
+            datos,
+            contacto]
+    }
+    const carnet = {
+        email:email,
+        card:card
+    }
     const accept = () => {
-        navigation.navigate()
+        rutaCarnet(carnet)
+        navigation.navigate('HomeTutor')
     }
 
     return (
@@ -27,7 +42,7 @@ const MiCarnetTutor = ({navigation}) => {
                     label="apodo"
                     value={apodo}
                     onChangeText={(t) => setApodo(t)}
-                    secureTextEntry={true}
+                    //secureTextEntry={true}
                     error=''
                     placeholder="Ingrese el apodo"
                 />
@@ -37,7 +52,7 @@ const MiCarnetTutor = ({navigation}) => {
                     label="datos"
                     value={datos}
                     onChangeText={(t) => setDatos(t)}
-                    secureTextEntry={true}
+                    //secureTextEntry={true}
                     error=''
                     placeholder="Ingrese información importante para ti"
                 />
@@ -47,7 +62,7 @@ const MiCarnetTutor = ({navigation}) => {
                     label="contacto"
                     value={contacto}
                     onChangeText={(t) => setContacto(t)}
-                    secureTextEntry={true}
+                    //secureTextEntry={true}
                     error=''
                     placeholder="Contacto de emergencia"
                 />
