@@ -14,6 +14,9 @@ import Registro from '../screens/Registro/Registro';
 import { useSelector } from 'react-redux';
 import LoginTutor from '../screens/Tutor/LoginTutor/LoginTutor';
 import RutinaUsuario from '../screens/Usuario/RutinaUsuario/RutinaUsuario';
+import MiCarnet from '../screens/Usuario/MiCarnet/MiCarnet';
+import ManualDeUsuario from '../screens/Tutor/ManualDeUsuario/ManualDeUsuario';
+import MiCarnetTutor from '../screens/Tutor/MiCarnetTutor/MiCarnetTutor';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +27,10 @@ function StackNavigator() {
 
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerShown: false, // Ocultar la barra de navegación en todas las pantallas
+    }}>
       {idToken ? (
         // Usuario autenticado, mostrar HomeUsuario
         // <Stack.Screen name="HomeUsuario" component={HomeUsuario} />
@@ -38,6 +44,9 @@ function StackNavigator() {
         <Stack.Screen name="Dia" component={Dia} />
         <Stack.Screen name="LoginTutor" component={LoginTutor} />
         <Stack.Screen name="RutinaUsuario" component={RutinaUsuario} />
+        <Stack.Screen name="MiCarnet" component={MiCarnet} />
+        <Stack.Screen name="ManualDeUso" component={ManualDeUsuario} />
+        <Stack.Screen name="MiCarnetTutor" component={MiCarnetTutor} />
         </>
       ) : (
         // Usuario no autenticado, mostrar otras pantallas

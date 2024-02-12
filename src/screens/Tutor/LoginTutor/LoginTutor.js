@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setUser } from '../../../fectures/estadoAutenticacion/estadoAutenticacion';
 import { useLoginMutation } from '../../../fectures/autenticacion/autenticacion';
 
 const LoginTutor = ({ navigation }) => {
@@ -12,37 +11,32 @@ const LoginTutor = ({ navigation }) => {
     const [passwordError, setPasswordError] = useState('');
     const [passInvalid, setPassInvalid] = useState('');
     const [tempError, setTempError] = useState('');
-    
-    
+
+
     useEffect(() => {
-        setEmail(idEmail || ''); 
+        setEmail(idEmail || '');
     }, [idEmail]);
     useEffect(() => {
         setPassInvalid(tempError);
         if (isSuccess) {
             navigation.navigate('HomeTutor');
         } else if (tempError) {
-            // Handle other error cases here if needed
         }
     }, [isSuccess, tempError, navigation]);
-    
-    
+
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario');
     }
-    
     const goHomeTutor = async () => {
         reset();
-        
         if (!password) {
             setPasswordError('Por favor, ingresa tu contraseña.');
             return;
         }
-        
         await triggerLogin({ email, password });
         console.log(data, isSuccess);
         console.log('Datos enviados:', { email, password });
-        
+
         if (!isSuccess) {
             setTempError('Contraseña inválida');
         }
@@ -53,7 +47,9 @@ const LoginTutor = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.titulo}>
                 <Text style={styles.tituloText}>LOGIN TUTOR</Text>
-                <Text style={styles.text}> Vuelva a ingresar la contraseña para acceder a la configuración</Text>
+            </View>
+            <View style={styles.contenedorInput}>
+                <Text style={styles.text}>Vuelva a ingresar la contraseña para acceder a la configuración</Text>
                 <TextInput
                     style={styles.inputRegistro}
                     label="Contraseña"
@@ -61,13 +57,12 @@ const LoginTutor = ({ navigation }) => {
                     onChangeText={(t) => setPassword(t)}
                     secureTextEntry={true}
                     error=''
-                    placeholder="Enter your password"
+                    placeholder="Ingrese su contraseña"
                 />
                 {passwordError !== '' && <Text style={styles.errorText}>{passwordError}</Text>}
                 {passInvalid !== '' && <Text style={styles.errorText}>{passInvalid}</Text>}
             </View>
             <View style={styles.contenedorBotonAzul}>
-                {/* Los botones con sus imágenes */}
                 <TouchableOpacity onPress={goHomeUsuario} >
                     <Image source={require('../../../../assets/back.png')} style={styles.botonAzul} />
                 </TouchableOpacity>
@@ -84,7 +79,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titulo: {
+        marginTop: 50,
         marginBottom: 10,
+        display:'flex',
+        alignItems:'center'
     },
     tituloText: {
         color: '#FF6600',
@@ -92,8 +90,11 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         marginBottom: 20,
+        alignItems: 'center'
     },
     text: {
+        marginTop: 30,
+        fontSize: 20,
         alignItems: 'center',
     },
     inputRegistro: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
         width: '88%'
     },
     contenedorBotonAzul: {
-        marginTop: 50,
+        marginTop: 320,
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '80%',

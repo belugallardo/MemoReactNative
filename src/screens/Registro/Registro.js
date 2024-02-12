@@ -14,7 +14,6 @@ const Registro = ({ navigation }) => {
     const [passwordMatchError, setPasswordMatchError] = useState('');
     const [createUser] = useCreateUserMutation();
 
-    console.log(data, isSuccess, error)
     useEffect(() => {
         if (isSuccess) console.log(data)
         if (isError) console.log(error)
@@ -34,7 +33,7 @@ const Registro = ({ navigation }) => {
     };
 
     const onSubmit = () => {
-        // Validación básica
+
         setEmailError('');
         setPasswordError('');
         setConfirmPasswordError('');
@@ -76,8 +75,7 @@ const Registro = ({ navigation }) => {
                         onChangeText={(t) => setEmail(t)}
                         secureTextEntry={false}
                         error={emailError !== '' ? true : false}
-                        placeholder="Enter your email"
-
+                        placeholder="Ingrese su email"
                     />
                     {emailError !== '' && <Text style={styles.errorText}>{emailError}</Text>}
                     <Text style={styles.subtitulo}>CONTRASEÑA:</Text>
@@ -88,7 +86,7 @@ const Registro = ({ navigation }) => {
                         onChangeText={(t) => setPassword(t)}
                         secureTextEntry={true}
                         error={passwordError !== '' ? true : false}
-                        placeholder="Enter your password"
+                        placeholder="Ingrese su contraseña"
                     />
                     {passwordError !== '' && <Text style={styles.errorText}>{passwordError}</Text>}
                     <Text style={styles.subtitulo}>CONFIRMAR CONTRASEÑA:</Text>
@@ -99,7 +97,7 @@ const Registro = ({ navigation }) => {
                         onChangeText={(t) => setConfirmPassword(t)}
                         secureTextEntry={true}
                         error={confirmPasswordError !== '' ? true : false}
-                        placeholder="Confirm your password"
+                        placeholder="Confirme su contraseña"
                     />
                     {confirmPasswordError !== '' && <Text style={styles.errorText}>{confirmPasswordError}</Text>}
                     {passwordMatchError !== '' && <Text style={styles.errorText}>{passwordMatchError}</Text>}
@@ -117,7 +115,7 @@ const Registro = ({ navigation }) => {
     );
 };
 
-// Estilos con StyleSheet.create
+
 const styles = StyleSheet.create({
     containerRegister: {
         flex: 4,
@@ -132,6 +130,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titulo: {
+        marginTop: 50,
         marginBottom: 10,
     },
     tituloText: {
@@ -148,7 +147,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     inputRegistro: {
-
         marginBottom: 10,
         padding: 10,
         borderRadius: 100,
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
         width: '88%',
     },
     contenedorBotonAzul: {
-        marginTop: 50,
+        marginTop: 150,
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '80%',

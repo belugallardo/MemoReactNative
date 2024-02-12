@@ -1,51 +1,43 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import backImage from '../../../../assets/back.png';
 import logoutImage from '../../../../assets/logout.png';
 
 const HomeTutor = ({navigation}) => {
-    const route = useRoute();
-    const { esarData } = route.params || {};
+
 
     const handleClick = () => {
         alert('Botón personalizado clickeado');
     };
-
-    useEffect(() => {
-        console.log("Valor de esarData", esarData);
-    }, [esarData]);
-
     const goToSemana = () => {
         navigation.navigate('Semana');
     };
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario');
     };
-    
-    // OJO cambiar ruta a funcion flecha
+    const goManualDeUso = () => {
+        navigation.navigate('ManualDeUso');
+    };
+
+    const goMiCarnetTutor = () => {
+        navigation.navigate('MiCarnetTutor');
+    };
+
     return (
         <View >
-            <Text>{esarData}</Text>
             <View style={styles.container}>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                    <TouchableOpacity style={styles.customButton} onPress={goManualDeUso}>
                         <Text style={styles.buttonText}>MANUAL DE USO</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.customButton} onPress={handleClick}>
                         <Text style={styles.buttonText}>AVATAR</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                    <TouchableOpacity style={styles.customButton} onPress={goMiCarnetTutor}>
                         <Text style={styles.buttonText}>MI CARNET</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.customButton} onPress={goToSemana}>
                         <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                        <Text style={styles.buttonText}>COMUNICACION</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                        <Text style={styles.buttonText}>AJUSTES</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -64,6 +56,7 @@ const HomeTutor = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        marginTop:140,
     },
     customButton: {
         width: 300,
@@ -86,6 +79,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 35,
+        marginTop: 170,
     },
     blueButton: {
         width: 30,

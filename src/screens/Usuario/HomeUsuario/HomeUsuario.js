@@ -1,36 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const HomeUsuario = ({navigation}) => {
-    const route = useRoute();
-   
-
-    const handleClick = () => {
-        alert('Botón personalizado clickeado');
+const HomeUsuario = ({ navigation }) => {
+    const goMiCarnet = () => {
+        navigation.navigate('MiCarnet')
     };
-    const goHomeTutor =()=>{
+    const goHomeTutor = () => {
         navigation.navigate('LoginTutor')
     }
-    const goRutinaUsuario =()=>{
+    const goRutinaUsuario = () => {
         navigation.navigate('RutinaUsuario')
     }
-
 
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.customButtonTutor} onPress={goHomeTutor}>
-                    <FontAwesome style={styles.buttonTextTutor} name="user" />
+                <FontAwesome style={styles.buttonTextTutor} name="user" />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.customButton} onPress={goRutinaUsuario}>
                     <Text style={styles.buttonText}>RUTINAS</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
-                    <Text style={styles.buttonText}>COMUNICACION</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                <TouchableOpacity style={styles.customButton} onPress={goMiCarnet}>
                     <Text style={styles.buttonText}>MI CARNET</Text>
                 </TouchableOpacity>
             </View>
@@ -39,8 +31,9 @@ const HomeUsuario = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-
-   
+    container: {
+        marginTop: 30,
+    },
     customButton: {
         width: 300,
         marginTop: 19,
@@ -59,16 +52,16 @@ const styles = StyleSheet.create({
         letterSpacing: 3,
     },
     buttonContainer: {
-        marginTop: 150,
+        marginTop: 200,
         alignItems: 'center',
     },
-    customButtonTutor:{
+    customButtonTutor: {
         width: 40,
         height: 80,
         backgroundColor: '#2372d9',
         borderBottomRightRadius: 30,
-        alignItems:'center',
-        
+        alignItems: 'center',
+
     },
     buttonTextTutor: {
         color: '#ffffff',
