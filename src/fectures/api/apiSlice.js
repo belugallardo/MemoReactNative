@@ -6,11 +6,10 @@ export const apiMemoSlice = createApi({
   endpoints: builder => ({
     getActividad: builder.query({
       query: (params) => `/actividad/params?categoria=${params.categoria}`,
-      // query: () => '/actividad/params'
     }),
     createActividad: builder.mutation({
       query: (newActividad) => {
-        console.log('Solicitud POST:', newActividad); // Agrega este console.log
+        console.log('Solicitud POST:', newActividad); 
         return {
           url: '/actividad/post/admin',
           method: 'POST',
@@ -20,7 +19,7 @@ export const apiMemoSlice = createApi({
     }),
     createUser: builder.mutation({
       query: (email) => {
-        console.log('Solicitud POST:', email); // Agrega este console.log
+        console.log('Solicitud POST:', email); 
         return {
           url: '/login/registerMovilUser',
           method: 'POST',
@@ -30,7 +29,7 @@ export const apiMemoSlice = createApi({
     }),
     addPictograma: builder.mutation({
       query: (data) => {
-        console.log('Solicitud POST add:', data); // Agrega este console.log
+        console.log('Solicitud POST add:', data); 
         return {
           url: '/rutinas/update',
           method: 'POST',
@@ -40,14 +39,14 @@ export const apiMemoSlice = createApi({
     }),
     getRutinaEmail: builder.query({
       query: (email) => {
-        console.log('Solicitud GET Rutina por Email:', email); // Add this console.log
+        console.log('Solicitud GET Rutina por Email:', email); 
         return `/rutinas/${email}`;
       },
     }),
 
     editPicto: builder.mutation({
       query: (data) => {
-        console.log('Solicitud POST:', data); // Agrega este console.log
+        console.log('Solicitud POST:', data); 
         return {
           url: '/rutinas/editArray',
           method: 'POST',
@@ -67,8 +66,27 @@ export const apiMemoSlice = createApi({
           body: carnet,
         }
       }
-    }) 
+    }),
+    editAvatar: builder.mutation({
+      query:(data) => {
+        const email = data.email;
+        const avatar = data.avatar;
+        console.log('esto es data', data)
+        console.log('Solicitud post avatar', email, 'esto es avatar', avatar);
+        return{
+          url:`/login/update/${email}`,
+          method:'POST',
+          body: avatar,
+        }
+      }
+    }),
+    getUser: builder.query({
+      query: (email) => {
+        console.log('Solicitud GET user por Email:', email); 
+        return `/login/users/${email}`;
+      },
+    }),
   }),
 });
 
-export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery, useEditPictoMutation, useEditCarnetMutation } = apiMemoSlice;
+export const { useGetActividadQuery, useCreateActividadMutation, useCreateUserMutation, useAddPictogramaMutation, useGetRutinaEmailQuery, useEditPictoMutation, useEditCarnetMutation, useEditAvatarMutation, useGetUserQuery } = apiMemoSlice;

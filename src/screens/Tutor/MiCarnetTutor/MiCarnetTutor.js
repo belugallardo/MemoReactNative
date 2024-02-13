@@ -35,7 +35,7 @@ const MiCarnetTutor = ({navigation}) => {
         <View style={styles.containerCarnet} >
             <Text style={styles.textTitle}>HOLA!</Text>
             <View style={styles.contenedorInput}>
-            <Text style={styles.textCarnet}> MI APODO ES:</Text>
+            <Text style={styles.textCarnet}>MI APODO ES:</Text>
 
                 <TextInput
                     style={styles.inputRegistro}
@@ -45,18 +45,23 @@ const MiCarnetTutor = ({navigation}) => {
                     //secureTextEntry={true}
                     error=''
                     placeholder="Ingrese el apodo"
+                    textAlignVertical="top"
+                    placeholderTextColor="#9aa49e"
                 />
-                <Text style={styles.textCarnet}> PARA ENTENDERTE MEJOR NECESITO:</Text>
+                <Text style={styles.textCarnet}>PARA ENTENDERTE MEJOR NECESITO:</Text>
                 <TextInput
-                    style={styles.inputRegistro}
+                    style={styles.inputRegistro2}
                     label="datos"
                     value={datos}
                     onChangeText={(t) => setDatos(t)}
                     //secureTextEntry={true}
                     error=''
                     placeholder="Ingrese información importante para ti"
+                    multiline={true}
+                    textAlignVertical="top"
+                    placeholderTextColor="#9aa49e"
                 />
-                <Text style={styles.textCarnet}> CONTACTO DE EMERGENCIA:</Text>
+                <Text style={styles.textCarnet}>CONTACTO DE EMERGENCIA:</Text>
                 <TextInput
                     style={styles.inputRegistro}
                     label="contacto"
@@ -65,6 +70,8 @@ const MiCarnetTutor = ({navigation}) => {
                     //secureTextEntry={true}
                     error=''
                     placeholder="Contacto de emergencia"
+                    textAlignVertical="top"
+                    placeholderTextColor="#9aa49e"
                 />
             </View>
             <View style={styles.contenedorBotonAzul}>
@@ -82,18 +89,19 @@ const styles = StyleSheet.create({
     containerCarnet: {
         flex: 1,
         backgroundColor: '#eec144',
+        padding:15
     },
     textTitle: {
         color: '#ff6600',
-        fontSize: 40,
-        fontWeight: 'bold',
+        fontSize: 45,
+        fontWeight: '900',
         marginLeft: 30,
-        marginTop: 60,
+        marginTop: 70,
     },
     textCarnet: {
         color: '#ffffff',
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 23,
+        fontWeight: '600',
         marginTop: 20,
     },
     inputRegistro: {
@@ -101,11 +109,25 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 20,
         padding: 10,
-        borderRadius: 100,
+        borderRadius: 20,
         backgroundColor: '#ffffff',
         color: '#737474',
         fontSize: 16,
-        width: '88%'
+        width: '88%',
+        fontWeight: 'bold',
+    },
+    inputRegistro2: {
+        width: 300,
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 20,
+        backgroundColor: '#ffffff',
+        color: '#737474',
+        fontSize: 16,
+        width: '88%',
+        height: 100,
+        fontWeight: 'bold',
     },
     contenedorInput:{
         marginLeft:20,
@@ -114,8 +136,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '80%',
-        marginLeft: 40,
-        marginTop: 20,
+        marginLeft: 30,
+        marginTop: 60,
     },
     botonAzul: {
         width: 60,

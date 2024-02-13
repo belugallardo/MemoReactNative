@@ -30,7 +30,6 @@ const Semana = ({navigation}) => {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.buttonContainer}>
-
                         <TouchableOpacity style={styles.customButton} onPress={() => goToDia('lunes')}>
                             <Text style={styles.buttonText}>LUNES</Text>
                         </TouchableOpacity>
@@ -71,6 +70,7 @@ const styles = StyleSheet.create({
 
     container: {
         alignItems: 'center',
+        marginTop:65
     },
 
     customButton: {

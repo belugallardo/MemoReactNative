@@ -7,8 +7,8 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    useWindowDimensions,
     ActivityIndicator,
+    ScrollView
 } from 'react-native';
 import { useGetActividadQuery, useCreateActividadMutation, useAddPictogramaMutation } from '../../fectures/api/apiSlice';
 import accept from '../../../assets/accept.png';
@@ -24,29 +24,21 @@ const Tareas = ({ navigation, route }) => {
     const [filtro, setFiltro] = useState('');
     const [addPicto] = useAddPictogramaMutation();
     const [createActividad] = useCreateActividadMutation();
-    const windowWidth = useWindowDimensions().width;
     const [actividades, setActividades] = useState([]);
-    //const { data, isLoading, error, refetch } = useGetActividadQuery();
     const { categoria: categoriaParam } = route.params || {};
-    // const { dia: diaParam } = route.params || {};
-    // const { momento: horarioParam } = route.params || {};
-    // const diaEnMinusculas = diaParam.toLowerCase();
-const infoRedux = useSelector((state) => state.setdia);
-   const diaEnMinusculas = infoRedux.value.dia;
-   const momentoEstado = infoRedux.value.momento;
-    //console.log('Valor de categoriaParam desde el componente anterior:', categoriaParam);
+    const infoRedux = useSelector((state) => state.setdia);
+    const diaEnMinusculas = infoRedux.value.dia;
+    const momentoEstado = infoRedux.value.momento;
 
     //redux
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
-
     const { data, isLoading, error, refetch } = useGetActividadQuery({
-        categoria: categoriaParam, // Asegúrate de que 'categoria' sea el nombre correcto de tu parámetro
+        categoria: categoriaParam,
     });
 
     const [loading, setLoading] = useState(false);
-  
-    
+
     useEffect(() => {
         if (data) {
             setActividades(data.data.document);
@@ -70,11 +62,9 @@ const infoRedux = useSelector((state) => state.setdia);
                 formData.append('pictograma', file);
                 const result = await createActividad(formData).unwrap();
                 console.log(formData)
-                //console.log('Respuesta de la API:', result);
                 if (result.msg) {
                     setActividades(prevActividades => [...prevActividades, result]);
                     refetch();
-
                 } else {
                     console.warn('La API indicó un problema. No se recargó la lista.');
                 }
@@ -91,7 +81,6 @@ const infoRedux = useSelector((state) => state.setdia);
     const pickImagen = async () => {
         try {
             const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-
             if (granted) {
                 let result = await ImagePicker.launchCameraAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -110,8 +99,6 @@ const infoRedux = useSelector((state) => state.setdia);
             console.error("Error al interactuar con la cámara:", error);
         }
     }
-
-
     useEffect(() => {
         if (userEmail && image) {
             handleCreateActividad();
@@ -136,36 +123,22 @@ const infoRedux = useSelector((state) => state.setdia);
         }
         setSelectedImages(newSelectedImages);
     };
-
-
     const renderImageUrlItem = ({ item }) => {
-        
-    
-        // Verificar si hay término de búsqueda
         const tieneTerminoBusqueda = searchTerm.trim().length > 0;
-    
-        // Filtrar por el término de búsqueda en la propiedad "filtro"
         const coincideConTerminoBusqueda = tieneTerminoBusqueda
             ? item.filtro.some((filtroItem) => filtroItem.toLowerCase().includes(searchTerm.toLowerCase()))
             : true;
-    
-        // Obtener el correo electrónico almacenado en otra variable (reemplaza 'otroEmail' con tu variable)
         const otroEmail = email;
-    
-        // Filtrar por el correo electrónico "admin@admin" o el correo almacenado en otra variable
         const coincideConEmail = item.email === 'admin@admin' || item.email === otroEmail;
-    
-        // Verificar si ambos filtros coinciden
         if (!coincideConTerminoBusqueda || !coincideConEmail) {
             return null;
         }
-    
+
         return (
             <TouchableOpacity
                 style={[
                     styles.imageContainer,
                     selectedImages.has(item.imageUrl) && styles.selectedImageContainer,
-                    
                 ]}
                 onPress={() => toggleImageSelection(item.imageUrl)}
             >
@@ -173,7 +146,7 @@ const infoRedux = useSelector((state) => state.setdia);
             </TouchableOpacity>
         );
     };
-    
+
 
     const goCategorias = () => {
         navigation.navigate('CategoriasTutor')
@@ -181,15 +154,12 @@ const infoRedux = useSelector((state) => state.setdia);
 
     const addPictograma = async () => {
         const infoImagen = {
-            email:email,
-            dia:diaEnMinusculas,
-            horario:momentoEstado,
-            valor:selectedImageURL
+            email: email,
+            dia: diaEnMinusculas,
+            horario: momentoEstado,
+            valor: selectedImageURL
         };
-      
-     
         await addPicto(infoImagen);
-       console.log("este es el erro Picto", infoImagen)
     }
 
     const volverADia = async () => {
@@ -200,8 +170,8 @@ const infoRedux = useSelector((state) => state.setdia);
             console.error('Error en addPictograma:', error);
         }
     }
-    
-    
+
+
     return (
         <View style={styles.container}>
             <TextInput
@@ -210,24 +180,23 @@ const infoRedux = useSelector((state) => state.setdia);
                 value={searchTerm}
                 onChangeText={(text) => setSearchTerm(text)}
             />
-            <View style={styles.pictogramas}>
-                {isLoading || loading ? (
-
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color="#0000ff" />
-                    </View>
-                ) : (
-
-                    <FlatList
-                        data={actividades}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={renderImageUrlItem}
-                        numColumns={3}
-                        contentContainerStyle={styles.pictogramas}
-                        style={styles.flatList}
-                    />
-
-                )}
+            <View style={styles.scrollContainer}>
+                <View style={styles.pictogramas}>
+                    {isLoading || loading ? (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </View>
+                    ) : (
+                        <FlatList
+                            data={actividades}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={renderImageUrlItem}
+                            numColumns={3}
+                            contentContainerStyle={styles.pictogramas}
+                            style={styles.flatList}
+                        />
+                    )}
+                </View>
             </View>
 
             <View style={styles.blueButtonContainer}>
@@ -248,10 +217,10 @@ const infoRedux = useSelector((state) => state.setdia);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-
+        marginTop: 40
     },
     input: {
+        margin: 20,
         height: 40,
         borderWidth: 1,
         borderColor: '#ccc',
@@ -265,7 +234,6 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: 90,
         height: 90,
-
     },
     imageContainer: {
         margin: 7,
@@ -285,7 +253,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginTop: 'auto',
         marginBottom: 30,
-
+        marginHorizontal: 20,
     },
     imageStyleButton: {
         width: 70,
@@ -293,16 +261,16 @@ const styles = StyleSheet.create({
     },
     pictogramas: {
         alignItems: 'center',
-        margin: 15,
+        margin: 5,
     },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-
-
+    scrollContainer: {
+        maxHeight: '70%',
+    },
 });
 
 export default Tareas;

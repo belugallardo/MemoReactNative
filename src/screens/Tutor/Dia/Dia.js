@@ -5,11 +5,14 @@ import { setDia } from '../../../fectures/estadoCOmponente/estadoComponente';
 import { useEditPictoMutation, useGetRutinaEmailQuery } from '../../../fectures/api/apiSlice';
 import backImage from '../../../../assets/back.png';
 import homeUsuario from '../../../../assets/home.png';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const Dia = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const infoRedux = useSelector((state) => state.setdia);
     const { dia: diaEstado } = infoRedux.value;
+    const diaEnMayuscula = diaEstado.toUpperCase();
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
     const [edPicto] = useEditPictoMutation();
@@ -21,12 +24,17 @@ const Dia = ({ navigation, route }) => {
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario')
     }
-
+    
     const goHomeTutor = () => {
         navigation.navigate('HomeTutor')
     }
-
+    
     const { data, isLoading, error, refetch } = useGetRutinaEmailQuery(email);
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch();
+        }, [])
+    );
 
     useEffect(() => {
         if (isLoading) {
@@ -36,7 +44,7 @@ const Dia = ({ navigation, route }) => {
         if (error) {
             console.error('Error:', error);
         }
-    }, [isLoading, error]);
+    }, [isLoading, error, refetch]);
 
     const dataRutina = data?.document || [];
     const datosAlmacenados = dataRutina.map(item => item.rutina[diaEstado]);
@@ -95,32 +103,28 @@ const Dia = ({ navigation, route }) => {
     );
     const renderSeccion = (momento) => (
         <View>
-            <Text style={styles.text}>{momento}</Text>
             <View style={styles.seccionContainer}>
                 <TouchableOpacity style={styles.customButton} onPress={() => goToCategorias(momento)}>
                     <Text style={styles.button}>+</Text>
                 </TouchableOpacity>
-                <FlatList
-                    data={datosAlmacenados[0]?.[momento.toLowerCase()] || []}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => renderIcon({ item, index, momento })}
-                    numColumns={3}
-                    contentContainerStyle={styles.pictogramas}
-                    style={styles.flatList}
-                />
+                    <FlatList
+                        data={datosAlmacenados[0]?.[momento.toLowerCase()] || []}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item, index }) => renderIcon({ item, index, momento })}
+                        horizontal={true}
+                    />
             </View>
         </View>
     );
 
 
     return (
-        <View>
-            <Text style={styles.titulo}>{`${diaEstado}`}</Text>
+        <View style={styles.contenedor}>
+            <Text style={styles.titulo}>{`${diaEnMayuscula}`}</Text>
             <View style={styles.containerEdit}>
                 <TouchableOpacity
                     style={styles.customBottonEdit}
-                    onPress={modoEdicion ? desactivarModoEdicion : activarModoEdicion}
-                >
+                    onPress={modoEdicion ? desactivarModoEdicion : activarModoEdicion}>
                     <Text style={styles.buttonEdit}>{modoEdicion ? 'Cancelar' : 'Editar'}</Text>
                 </TouchableOpacity>
 
@@ -130,9 +134,11 @@ const Dia = ({ navigation, route }) => {
                     </TouchableOpacity>
                 )}
             </View>
-
+            <Text style={styles.text}>MAÑANA</Text>
             {renderSeccion('manana')}
+            <Text style={styles.text}>TARDE</Text>
             {renderSeccion('tarde')}
+            <Text style={styles.text}>NOCHE</Text>
             {renderSeccion('noche')}
             <View style={styles.blueButtonContainer}>
                 <TouchableOpacity style={styles.blueButton} onPress={goHomeTutor}>
@@ -144,28 +150,32 @@ const Dia = ({ navigation, route }) => {
             </View>
         </View>
 
-        
+
     );
 };
 
-
-
 const styles = StyleSheet.create({
+    contenedor: {
+        marginTop: 60,
+        marginLeft: 10,
+    },
     titulo: {
-        marginTop: 20,
-        fontSize: 50,
-        color: '#000000',
+        marginLeft: 20,
+        fontSize: 45,
+        color: '#2372d9',
         fontWeight: 'bold',
     },
     containerEdit: {
         flexDirection: 'row',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
+
         marginTop: 10,
     },
     customBottonEdit: {
+        height: 40,
         width: 100,
         margin: 15,
-        paddingVertical: 15,
+        paddingVertical: 10,
         borderRadius: 10,
         backgroundColor: '#ffffff',
         justifyContent: 'center',
@@ -186,8 +196,9 @@ const styles = StyleSheet.create({
     },
     customBottonEliminar: {
         width: 100,
+        height: 40,
         margin: 15,
-        paddingVertical: 15,
+        paddingVertical: 10,
         borderRadius: 10,
         backgroundColor: '#ff0000', // Cambiado a rojo para representar eliminar
         justifyContent: 'center',
@@ -212,14 +223,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     text: {
-        marginTop: 15,
         marginLeft: 20,
         color: '#2372d9',
-        fontWeight: 'bold',
-        fontSize: 15,
+        fontWeight: '900',
+        fontSize: 20,
     },
     customButton: {
         width: 60,
+        height:70,
         margin: 15,
         paddingVertical: 15,
         borderRadius: 10,
@@ -230,7 +241,6 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 2,
-
         },
     },
     imageContainer: {
@@ -242,8 +252,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     imageStyle: {
-        width: 90,
-        height: 90,
+        width: 70,
+        height: 70,
     },
     selectedImageContainer: {
         borderColor: 'blue',
@@ -252,7 +262,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 35,
-        marginHorizontal:45,
+        marginTop:50,
+        marginHorizontal: 45,
     },
     blueButton: {
         width: 30,

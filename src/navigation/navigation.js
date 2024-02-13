@@ -17,6 +17,8 @@ import RutinaUsuario from '../screens/Usuario/RutinaUsuario/RutinaUsuario';
 import MiCarnet from '../screens/Usuario/MiCarnet/MiCarnet';
 import ManualDeUsuario from '../screens/Tutor/ManualDeUsuario/ManualDeUsuario';
 import MiCarnetTutor from '../screens/Tutor/MiCarnetTutor/MiCarnetTutor';
+import AvatarTutor from '../screens/Tutor/AvatarTutor/AvatarTutor';
+import Bienvenido from '../screens/Usuario/Bienvenido/Bienvenido';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +49,8 @@ function StackNavigator() {
         <Stack.Screen name="MiCarnet" component={MiCarnet} />
         <Stack.Screen name="ManualDeUso" component={ManualDeUsuario} />
         <Stack.Screen name="MiCarnetTutor" component={MiCarnetTutor} />
+        <Stack.Screen name="AvatarTutor" component={AvatarTutor} />
+        <Stack.Screen name="Bienvenido" component={Bienvenido} />
         </>
       ) : (
         // Usuario no autenticado, mostrar otras pantallas

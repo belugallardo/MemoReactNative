@@ -10,7 +10,7 @@ const HomeUsuario = ({ navigation }) => {
         navigation.navigate('LoginTutor')
     }
     const goRutinaUsuario = () => {
-        navigation.navigate('RutinaUsuario')
+        navigation.navigate('Bienvenido')
     }
 
     return (

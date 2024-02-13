@@ -6,8 +6,8 @@ import logoutImage from '../../../../assets/logout.png';
 const HomeTutor = ({navigation}) => {
 
 
-    const handleClick = () => {
-        alert('Botón personalizado clickeado');
+    const goAvatar = () => {
+        navigation.navigate('AvatarTutor');
     };
     const goToSemana = () => {
         navigation.navigate('Semana');
@@ -18,7 +18,6 @@ const HomeTutor = ({navigation}) => {
     const goManualDeUso = () => {
         navigation.navigate('ManualDeUso');
     };
-
     const goMiCarnetTutor = () => {
         navigation.navigate('MiCarnetTutor');
     };
@@ -30,7 +29,7 @@ const HomeTutor = ({navigation}) => {
                     <TouchableOpacity style={styles.customButton} onPress={goManualDeUso}>
                         <Text style={styles.buttonText}>MANUAL DE USO</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.customButton} onPress={handleClick}>
+                    <TouchableOpacity style={styles.customButton} onPress={goAvatar}>
                         <Text style={styles.buttonText}>AVATAR</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.customButton} onPress={goMiCarnetTutor}>

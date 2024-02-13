@@ -11,8 +11,6 @@ const CategoriasTutor = (params) => {
     const infoRedux = useSelector((state) => state.setdia);
     const  diaEstado  = infoRedux.value.dia;
     const momentoEstado = infoRedux.value.momento;
-    console.log("Esto llega como dia y momento",momentoEstado, diaEstado)
-   
 
     const goToTareas = (categoria) => {
         navigation.navigate('Tareas', { categoria, momentoEstado, diaEstado });
@@ -21,16 +19,17 @@ const CategoriasTutor = (params) => {
         navigation.navigate('HomeUsuario')
     }
 
+    const goDia =() =>{
+        navigation.navigate('Dia')
+    }
 
     return (
         <View>
             <View style={styles.container}>
-                <Text>CTEGORIAS</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('higiene')}>
                         <Text style={styles.buttonText}>HIGIENE</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('alimentacion')}>
                         <Text style={styles.buttonText}>ALIMENTACION</Text>
                     </TouchableOpacity>
@@ -40,13 +39,13 @@ const CategoriasTutor = (params) => {
                     <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('escuela')}>
                         <Text style={styles.buttonText}>ESCUELA</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('extras')}>
+                    <TouchableOpacity style={styles.customButton} onPress={() => goToTareas('extra')}>
                         <Text style={styles.buttonText}>EXTRAS</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.blueButtonContainer}>
-                <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
+                <TouchableOpacity style={styles.blueButton} onPress={goDia}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.blueButton} onPress={goHomeUsuario}>
@@ -61,10 +60,10 @@ const styles = StyleSheet.create({
 
     container: {
         alignItems: 'center',
+        marginTop:50,
     },
 
     customButton: {
-
         width: 300,
         marginTop: 19,
         marginBottom: 0,
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 65,
+        marginTop:100
     },
     blueButton: {
         width: 30,
