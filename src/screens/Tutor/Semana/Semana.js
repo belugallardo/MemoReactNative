@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React, { useEffect } from 'react';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import React from 'react';
 import backImage from '../../../../assets/back.png';
 import homeUsuario from '../../../../assets/home.png';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,18 +8,13 @@ import { setDia } from '../../../fectures/estadoCOmponente/estadoComponente';
 
 const Semana = ({navigation}) => {
     const dispatch = useDispatch();
-    const route = useRoute();
-
     const goToDia = (dia) => {
-        console.log(dia)
         dispatch(setDia({ dia, momento: null }));
         navigation.navigate('Dia', { dia });
     };
-
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario')
     }
-
     const goHomeTutor = () => {
         navigation.navigate('HomeTutor')
     }
@@ -67,12 +61,10 @@ const Semana = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-
     container: {
         alignItems: 'center',
         marginTop:65
     },
-
     customButton: {
         width: 300,
         marginTop: 19,

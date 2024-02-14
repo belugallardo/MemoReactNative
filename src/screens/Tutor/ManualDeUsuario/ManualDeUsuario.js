@@ -28,14 +28,12 @@ const ManualDeUsuario = ({navigation}) => {
                 ))}
             </ScrollView>
             <View style={styles.blueButtonContainer}>
-
             <TouchableOpacity style={styles.blueButton} onPress={() => navigation.navigate('HomeTutor')}>
                     <Image source={backImage} style={styles.imageStyle} />
                 </TouchableOpacity>
             </View>
         </View>
     );
-
 };
 
 const styles = StyleSheet.create({
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: screenWidth,
-        height: screenWidth * 1.8, // Ajusta la altura según tus necesidades
+        height: screenWidth * 1.8, 
         resizeMode: 'cover',
     },
     imageStyle: {

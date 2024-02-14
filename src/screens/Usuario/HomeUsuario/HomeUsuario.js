@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#2372d9',
         borderBottomRightRadius: 30,
         alignItems: 'center',
-
     },
     buttonTextTutor: {
         color: '#ffffff',

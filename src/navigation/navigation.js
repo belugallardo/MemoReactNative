@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SelecTutorUser from '../components/SelecTutorUser/SelecTutorUser';
 import HomeUsuario from '../screens/Usuario/HomeUsuario/HomeUsuario';
 import HomeTutor from '../screens/Tutor/HomeTutor/HomeTutor';
 import Tareas from '../screens/tareas/Tareas';
@@ -31,16 +30,13 @@ function StackNavigator() {
   return (
     <Stack.Navigator
     screenOptions={{
-      headerShown: false, // Ocultar la barra de navegación en todas las pantallas
+      headerShown: false, 
     }}>
       {idToken ? (
-        // Usuario autenticado, mostrar HomeUsuario
-        // <Stack.Screen name="HomeUsuario" component={HomeUsuario} />
         <>
         <Stack.Screen name="HomeUsuario" component={HomeUsuario} />
         <Stack.Screen name="HomeTutor" component={HomeTutor} />
         <Stack.Screen name="Tareas" component={Tareas} />
-        <Stack.Screen name="SelecTutorUser" component={SelecTutorUser} />
         <Stack.Screen name="CategoriasTutor" component={CategoriasTutor} />
         <Stack.Screen name="Semana" component={Semana} />
         <Stack.Screen name="Dia" component={Dia} />
@@ -53,16 +49,12 @@ function StackNavigator() {
         <Stack.Screen name="Bienvenido" component={Bienvenido} />
         </>
       ) : (
-        // Usuario no autenticado, mostrar otras pantallas
         <>
         
       <Stack.Screen name="Home" component={HomeInicio} />
       <Stack.Screen name="Login" component={HomeLogin} />
-      {/* <Stack.Screen name="HomeTutor" component={HomeTutor} /> */}
-      {/* <Stack.Screen name="HomeUsuario" component={HomeUsuario} /> */}
       <Stack.Screen name="EnConstruccion" component={EnConstruccion} />
       <Stack.Screen name="Registro" component={Registro} />
-      {/* <Stack.Screen name="Settings" component={Settings} /> */}
       </>
       )}
     </Stack.Navigator>

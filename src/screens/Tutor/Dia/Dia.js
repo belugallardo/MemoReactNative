@@ -16,7 +16,6 @@ const Dia = ({ navigation, route }) => {
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
     const [edPicto] = useEditPictoMutation();
-
     const goToCategorias = (momento) => {
         dispatch(setDia({ dia: diaEstado, momento }));
         navigation.navigate('CategoriasTutor', { momento });
@@ -48,17 +47,13 @@ const Dia = ({ navigation, route }) => {
 
     const dataRutina = data?.document || [];
     const datosAlmacenados = dataRutina.map(item => item.rutina[diaEstado]);
-
     const [modoEdicion, setModoEdicion] = useState(false);
     const [selectedImages, setSelectedImages] = useState(new Set());
-    //const [selectedImageURL, setSelectedImageURL] = useState('');
-    const [momento, setMomento] = useState(''); // Nuevo estado para almacenar el momento del día seleccionado
-    const [selectedImageIndex, setSelectedImageIndex] = useState(-1); // Nuevo estado para almacenar el índice de la ima
-
+    const [momento, setMomento] = useState(''); 
+    const [selectedImageIndex, setSelectedImageIndex] = useState(-1); 
     const activarModoEdicion = () => {
         setModoEdicion(true);
     };
-
     const desactivarModoEdicion = () => {
         setModoEdicion(false);
         setSelectedImages(new Set());
@@ -74,21 +69,15 @@ const Dia = ({ navigation, route }) => {
 
 
     const eliminarImagen = async () => {
-
         await edPicto(pictoAEliminar);
         refetch();
-        desactivarModoEdicion(); // Desactivar el modo de edición y limpiar la selección de imágenes
-
+        desactivarModoEdicion(); 
     };
-
-
     const toggleImageSelection = (imageUrl, index, momento) => {
-        console.log('esto llega en el toggle', imageUrl, index, momento);
-        setSelectedImageIndex(index); // Almacenar el índice de la imagen seleccionada
-        setMomento(momento); // Almacenar el momento del día actual
-        setSelectedImages(new Set([`${momento}_${index}`])); // Almacenar la combinación de momento e índice como identificador único de la imagen seleccionada
+        setSelectedImageIndex(index); 
+        setMomento(momento); 
+        setSelectedImages(new Set([`${momento}_${index}`])); 
     };
-
     const renderIcon = ({ item, index, momento }) => (
         <TouchableOpacity
             key={index}
@@ -116,8 +105,6 @@ const Dia = ({ navigation, route }) => {
             </View>
         </View>
     );
-
-
     return (
         <View style={styles.contenedor}>
             <Text style={styles.titulo}>{`${diaEnMayuscula}`}</Text>
@@ -127,7 +114,6 @@ const Dia = ({ navigation, route }) => {
                     onPress={modoEdicion ? desactivarModoEdicion : activarModoEdicion}>
                     <Text style={styles.buttonEdit}>{modoEdicion ? 'Cancelar' : 'Editar'}</Text>
                 </TouchableOpacity>
-
                 {modoEdicion && (
                     <TouchableOpacity style={styles.customBottonEliminar} onPress={eliminarImagen} disabled={selectedImages.size === 0}>
                         <Text style={styles.buttonEliminar}>Eliminar</Text>
@@ -149,8 +135,6 @@ const Dia = ({ navigation, route }) => {
                 </TouchableOpacity>
             </View>
         </View>
-
-
     );
 };
 
@@ -200,7 +184,7 @@ const styles = StyleSheet.create({
         margin: 15,
         paddingVertical: 10,
         borderRadius: 10,
-        backgroundColor: '#ff0000', // Cambiado a rojo para representar eliminar
+        backgroundColor: '#ff0000', 
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#737474',

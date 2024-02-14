@@ -5,13 +5,11 @@ import { useSelector } from 'react-redux';
 import next from '../../../../assets/next.png'
 
 const Bienvenido = ({navigation}) => {
-
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
     const { data, isLoading, error, refetch } = useGetUserQuery(email);
     const avatar = data?.data.avatar;
     const apodo = data?.data.card[0];
-
     const goRutinaUsuario = () => {
         navigation.navigate('RutinaUsuario')
     }
@@ -24,7 +22,7 @@ const Bienvenido = ({navigation}) => {
                 <Text style={styles.apodo}>{apodo}</Text>
             </View>
             <TouchableOpacity style={styles.containerAvatar}>
-                <Image source={{ uri: avatar }} style={{ width: 220, height: 350 }} />
+                <Image source={{ uri: avatar }} style={{ width: 220, height: 550 }} />
             </TouchableOpacity>
             <View style={styles.blueButtonContainer}>
             <TouchableOpacity style={styles.blueButton} onPress={goRutinaUsuario}>
@@ -40,29 +38,29 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     containerAvatar: {
-        width: 150,
-        height: 250,
-        margin: 40,
+        width: 250,
+        height: 350,
+        marginTop:35,
+        marginBottom:80,
         justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
-        marginTop: 120,
+        marginTop: 60,
         fontSize: 38,
         fontWeight: '600',
-        marginBottom: 30,
+        marginBottom: 10,
         marginHorizontal: 10,
         color: '#ff6600'
     },
     apodo: {
         fontSize: 28,
         fontWeight: '600',
-        marginBottom: 30,
+        marginBottom: 60,
         marginHorizontal: 10,
         color: '#ff6600',
         textAlign:'center'
     },
-
     containerTitle: {
         alignItems: 'center',
     },
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft:30,
         marginRight:60,
-        marginTop:80,
+        marginTop:10,
     },
     imageStyle: {
         width: 70,

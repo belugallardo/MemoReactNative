@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
     StyleSheet,
     ActivityIndicator,
-    ScrollView
 } from 'react-native';
 import { useGetActividadQuery, useCreateActividadMutation, useAddPictogramaMutation } from '../../fectures/api/apiSlice';
 import accept from '../../../assets/accept.png';
@@ -29,8 +28,6 @@ const Tareas = ({ navigation, route }) => {
     const infoRedux = useSelector((state) => state.setdia);
     const diaEnMinusculas = infoRedux.value.dia;
     const momentoEstado = infoRedux.value.momento;
-
-    //redux
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
     const { data, isLoading, error, refetch } = useGetActividadQuery({
@@ -44,7 +41,6 @@ const Tareas = ({ navigation, route }) => {
             setActividades(data.data.document);
         }
     }, [data]);
-
 
     const handleCreateActividad = async () => {
         try {
@@ -133,7 +129,6 @@ const Tareas = ({ navigation, route }) => {
         if (!coincideConTerminoBusqueda || !coincideConEmail) {
             return null;
         }
-
         return (
             <TouchableOpacity
                 style={[
@@ -198,7 +193,6 @@ const Tareas = ({ navigation, route }) => {
                     )}
                 </View>
             </View>
-
             <View style={styles.blueButtonContainer}>
                 <TouchableOpacity style={styles.blueButton} onPress={goCategorias}>
                     <Image source={backImage} style={styles.imageStyleButton} />

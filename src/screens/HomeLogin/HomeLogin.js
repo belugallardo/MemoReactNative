@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, } from 'react-native';
-import GoogleButton from '../../components/ButtonGoogle/ButtonGoogle';
 import { useLoginMutation } from '../../fectures/autenticacion/autenticacion';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../fectures/estadoAutenticacion/estadoAutenticacion';
@@ -50,7 +49,6 @@ export const HomeLogin = ({ navigation }) => {
     }
   };
 
-  const signInWithGoogleMethod = async () => { };
   const HomeInicio = () => {
     navigation.navigate('Home');
   };

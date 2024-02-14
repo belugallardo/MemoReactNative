@@ -33,7 +33,6 @@ const Registro = ({ navigation }) => {
     };
 
     const onSubmit = () => {
-
         setEmailError('');
         setPasswordError('');
         setConfirmPasswordError('');
@@ -51,16 +50,13 @@ const Registro = ({ navigation }) => {
         if (password !== confirmPassword) {
             setPasswordMatchError('Las contraseñas no coinciden.');
         }
-
         if (email && password && confirmPassword && password === confirmPassword) {
             triggerSignup({ email, password });
             createUser({email});
-
         }
     };
 
     return (
-
         <View style={styles.containerRegister}>
             <View style={styles.hero}>
                 <View style={styles.formRegistro}>

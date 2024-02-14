@@ -14,7 +14,6 @@ export const seteoDia = createSlice({
         setDia: (state, action) => {
             state.value.dia = action.payload.dia;
             state.value.momento = action.payload.momento;
-            console.log("Esto está en el estado de Redux", state);
         },
     },
 });

@@ -34,15 +34,10 @@ const LoginTutor = ({ navigation }) => {
             return;
         }
         await triggerLogin({ email, password });
-        console.log(data, isSuccess);
-        console.log('Datos enviados:', { email, password });
-
         if (!isSuccess) {
             setTempError('Contraseña inválida');
         }
     }
-
-
     return (
         <View style={styles.container}>
             <View style={styles.titulo}>

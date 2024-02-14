@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import CustomButton from '../../components/ButtonMemo/Button';
-import GoogleButton from '../../components/ButtonGoogle/ButtonGoogle';
 
 const HomeInicio = ({ navigation }) => {
 

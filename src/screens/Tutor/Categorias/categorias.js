@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -11,14 +11,12 @@ const CategoriasTutor = (params) => {
     const infoRedux = useSelector((state) => state.setdia);
     const  diaEstado  = infoRedux.value.dia;
     const momentoEstado = infoRedux.value.momento;
-
     const goToTareas = (categoria) => {
         navigation.navigate('Tareas', { categoria, momentoEstado, diaEstado });
     };
     const goHomeUsuario = () => {
         navigation.navigate('HomeUsuario')
     }
-
     const goDia =() =>{
         navigation.navigate('Dia')
     }
@@ -57,12 +55,10 @@ const CategoriasTutor = (params) => {
 };
 
 const styles = StyleSheet.create({
-
     container: {
         alignItems: 'center',
         marginTop:50,
     },
-
     customButton: {
         width: 300,
         marginTop: 19,

@@ -9,12 +9,11 @@ const MiCarnetTutor = ({navigation}) => {
     const [datos, setDatos] = useState('');
     const [contacto, setContacto] = useState('');
     const [rutaCarnet] = useEditCarnetMutation();
-
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
 
-    const goHomeUsuario = () => {
-        navigation.navigate('HomeUsuario');
+    const goHomeTutor = () => {
+        navigation.navigate('HomeTutor');
     }
 
     const card = {
@@ -75,7 +74,7 @@ const MiCarnetTutor = ({navigation}) => {
                 />
             </View>
             <View style={styles.contenedorBotonAzul}>
-                <TouchableOpacity onPress={goHomeUsuario} >
+                <TouchableOpacity onPress={goHomeTutor} >
                     <Image source={require('../../../../assets/back.png')} style={styles.botonAzul} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={accept} >

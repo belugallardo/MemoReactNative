@@ -4,8 +4,6 @@ import backImage from '../../../../assets/back.png';
 import logoutImage from '../../../../assets/logout.png';
 
 const HomeTutor = ({navigation}) => {
-
-
     const goAvatar = () => {
         navigation.navigate('AvatarTutor');
     };
@@ -36,7 +34,7 @@ const HomeTutor = ({navigation}) => {
                         <Text style={styles.buttonText}>MI CARNET</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.customButton} onPress={goToSemana}>
-                        <Text style={styles.buttonText} estilo="customButton" >SEMANA</Text>
+                        <Text style={styles.buttonText} >SEMANA</Text>
                     </TouchableOpacity>
                 </View>
             </View>

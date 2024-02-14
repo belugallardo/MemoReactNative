@@ -13,7 +13,7 @@ const AvatarTutor = ({navigation}) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const authState = useSelector((state) => state.auth);
     const email = authState.value.email;
-    
+
     const avatarImage = {
         avatar:selectedImage
     }
@@ -26,7 +26,6 @@ const AvatarTutor = ({navigation}) => {
     const handleImageSelection = (imageUrl) => {
         setSelectedImage(imageUrl);
     }
-    console.log('esto es selectedImage', avatarImage)
 
     const acceptAvatar = async () => {
         if (selectedImage) {
@@ -56,7 +55,6 @@ const AvatarTutor = ({navigation}) => {
                     <Image source={{ uri: imagen2 }} style={{ width: 100, height: 200 }} />
                 </TouchableOpacity>
             </View>
-
             <View style={styles.blueButtonContainer}>
                 <TouchableOpacity style={styles.blueButton} onPress={goHomeTutor}>
                     <Image source={backImage} style={styles.imageStyle} />
